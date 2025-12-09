@@ -1,187 +1,226 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Single-file React Starter — Interaktif</title>
-  <!-- Tailwind via CDN for rapid styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Selamat Ulang Tahun — Surprise</title>
   <style>
-    /* Small extra styles for animations */
-    .card-enter { transform: translateY(8px); opacity: 0; }
-    .card-enter-active { transform: translateY(0); opacity: 1; transition: all 320ms cubic-bezier(.2,.8,.2,1); }
-    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
+    :root{--bg:#fffaf6;--card:#ffffff;--accent:#7b4cff;--muted:#6b6b6b}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#fff);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+    .wrap{width:100%;max-width:760px}
+    .card{background:var(--card);border-radius:16px;padding:28px 32px;box-shadow:0 10px 30px rgba(43,26,79,0.08)}
+    h1{margin:0;font-size:26px;color:var(--accent)}
+    p.lead{color:var(--muted);margin:8px 0 20px}
+    .row{display:flex;gap:12px;align-items:center}
+    .col{flex:1}
+    label{display:block;font-size:12px;color:#444;margin-bottom:6px}
+    input[type=text]{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #eee;background:#fbfbfb}
+    textarea{width:100%;min-height:90px;padding:10px;border-radius:10px;border:1px solid #eee;background:#fbfbfb}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid #eee;color:#333}
+    .preview{margin-top:20px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbf8ff);min-height:120px;position:relative;overflow:hidden}
+    .message{white-space:pre-wrap;font-size:15px;color:#222}
+    .small{font-size:13px;color:#666;margin-top:8px}
+    footer{margin-top:18px;color:#888;font-size:13px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap}
+    .confetti-canvas{position:absolute;inset:0;pointer-events:none}
+    .center-btn{display:flex;gap:8px;align-items:center}
+    .download{background:#06b6d4}
+    .play{background:#10b981}
+    @media(max-width:560px){.row{flex-direction:column}}
   </style>
 </head>
-<body class="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-6">
-  <div id="root" class="w-full max-w-4xl"></div>
+<body>
+  <div class="wrap">
+    <div class="card" role="main">
+      <h1>Surprise Ucapan — Selamat Ulang Tahun 🎉</h1>
+      <p class="lead">Edit namanya, sesuaikan pesan, lalu tekan <strong>Play</strong> untuk efek interaktif. File ini satu berkas, cocok untuk dipublish ke GitHub Pages.</p>
 
-  <!-- React + ReactDOM + Babel (for single-file demo only) -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-
-  <!-- Single-file JSX app -->
-  <script type="text/babel">
-    const { useState, useEffect } = React;
-
-    function Header({onAddSample, theme, toggleTheme}){
-      return (
-        <header className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-semibold tracking-tight">Starter: React (single-file)</h1>
-          <div className="flex items-center gap-3">
-            <button className="px-3 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 transition" onClick={onAddSample}>Tambah contoh</button>
-            <button className="px-3 py-1 rounded-md glass border border-slate-700" onClick={toggleTheme} title="Toggle theme">
-              <span className="material-icons align-middle">{theme === 'dark' ? 'dark_mode' : 'light_mode'}</span>
-            </button>
-          </div>
-        </header>
-      );
-    }
-
-    function Counter(){
-      const [count, setCount] = useState(0);
-      return (
-        <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-700 shadow-md">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-sm text-slate-300">Counter</div>
-              <div className="text-3xl font-bold">{count}</div>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={()=>setCount(c=>c-1)} className="px-3 py-2 rounded-md glass">-</button>
-              <button onClick={()=>setCount(0)} className="px-3 py-2 rounded-md glass">reset</button>
-              <button onClick={()=>setCount(c=>c+1)} className="px-3 py-2 rounded-md bg-indigo-600">+</button>
-            </div>
-          </div>
+      <div class="row">
+        <div class="col">
+          <label for="name">Nama</label>
+          <input id="name" type="text" value="Sarah" />
         </div>
-      );
-    }
-
-    function TodoApp({items, setItems}){
-      const [text, setText] = useState('');
-      function add(){
-        if(!text.trim()) return;
-        setItems(prev=>[{id:Date.now(), text:text.trim(), done:false}, ...prev]);
-        setText('');
-      }
-      function toggle(id){
-        setItems(prev=>prev.map(it => it.id===id?{...it, done:!it.done}:it));
-      }
-      function remove(id){
-        setItems(prev=>prev.filter(it=>it.id!==id));
-      }
-      return (
-        <div className="p-4 rounded-2xl glass border border-slate-700 shadow-inner">
-          <div className="flex gap-2 mb-3">
-            <input value={text} onChange={e=>setText(e.target.value)} onKeyDown={e=>e.key==='Enter' && add()} placeholder="Tambah tugas..." className="flex-1 px-3 py-2 rounded-md bg-transparent border border-slate-700 focus:outline-none" />
-            <button onClick={add} className="px-3 py-2 rounded-md bg-emerald-600">Add</button>
-          </div>
-          <ul className="space-y-2 max-h-48 overflow-auto">
-            {items.length===0 && <li className="text-slate-400 text-sm">(Belum ada tugas)</li>}
-            {items.map(item=> (
-              <li key={item.id} className={`p-2 rounded-md flex items-center justify-between ${item.done? 'opacity-60 line-through':''}`}>
-                <div className="flex items-center gap-3">
-                  <input type="checkbox" checked={item.done} onChange={()=>toggle(item.id)} />
-                  <div>{item.text}</div>
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={()=>remove(item.id)} className="px-2 py-1 rounded-md glass">hapus</button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div class="col">
+          <label for="greet">Kata pembuka (opsional)</label>
+          <input id="greet" type="text" value="Barakallah fii umrik," />
         </div>
-      );
-    }
+      </div>
 
-    function DemoCard({title, children}){
-      return (
-        <div className="p-4 rounded-2xl glass border border-slate-700 shadow-sm">
-          <div className="font-medium mb-2">{title}</div>
-          {children}
+      <div style="margin-top:12px">
+        <label for="message">Pesan (bisa multi baris)</label>
+        <textarea id="message">Di hari spesial ini, aku cuma pengen kamu tahu satu hal:
+kamu berhak dapat hal-hal baik dalam hidupmu.
+
+Semoga Allah selalu jagain kamu,
+ngasih ketenangan di hati, dan ngelancarake semua urusanmu.
+
+Kalau lagi capek, semoga diberi kekuatan.
+Kalau lagi bingung, semoga diberi jalan.
+Kalau lagi sedih, semoga cepat diganti sama kebahagiaan.
+
+Selamat ulang tahun ya, Sarah.
+Semoga tahun ini jadi tahun yang lebih lembut buat kamu.
+
+Thank you.</textarea>
+      </div>
+
+      <div style="margin-top:12px" class="controls">
+        <button id="play" class="btn play">Play 🎉</button>
+        <button id="stop" class="btn ghost">Stop</button>
+        <button id="download" class="btn download">Download HTML</button>
+        <div style="flex:1"></div>
+        <div class="center-btn">
+          <label style="font-size:13px;color:#555;margin-right:8px">Mode tulus</label>
         </div>
-      );
+      </div>
+
+      <div class="preview" id="preview">
+        <canvas class="confetti-canvas" id="c"></canvas>
+        <div style="position:relative;z-index:2">
+          <div class="message" id="render"></div>
+        </div>
+      </div>
+
+      <div class="small">Tip: sesuaikan nama dan pesan, lalu tekan Play. Klik Download untuk menyimpan file HTML yang sudah disesuaikan.</div>
+      <footer>Made with care — copy to GitHub Pages by upload file <code>index.html</code>.</footer>
+    </div>
+  </div>
+
+  <script>
+    // Elements
+    const nameInput = document.getElementById('name');
+    const greetInput = document.getElementById('greet');
+    const messageInput = document.getElementById('message');
+    const playBtn = document.getElementById('play');
+    const stopBtn = document.getElementById('stop');
+    const downloadBtn = document.getElementById('download');
+    const render = document.getElementById('render');
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    // Typewriter + simple timeline
+    let typing = null;
+    let confetti = [];
+    let confettiAnim = null;
+
+    function makeMessage(){
+      const name = nameInput.value.trim() || 'Teman';
+      const greet = greetInput.value.trim();
+      const body = messageInput.value.trim();
+      let full = '';
+      if(greet) full += greet + ' ' + name + '\n\n';
+      full += body;
+      return full;
     }
 
-    function App(){
-      const [items, setItems] = useState([]);
-      const [theme, setTheme] = useState('dark');
-
-      useEffect(()=>{
-        document.documentElement.classList.remove('light','dark');
-        document.documentElement.classList.add(theme);
-      },[theme]);
-
-      function addSample(){
-        setItems(prev=>[
-          {id:1, text:'Belajar React (single-file demo)', done:false},
-          {id:2, text:'Buat tugas kampus', done:true},
-          ...prev
-        ]);
-      }
-
-      function toggleTheme(){
-        setTheme(t=> t==='dark' ? 'light' : 'dark');
-        // adjust body colors for light theme
-        if(theme === 'dark'){
-          document.body.style.background = 'linear-gradient(to bottom, #f8fafc, #e2e8f0)';
-          document.body.style.color = '#0f172a';
-        } else {
-          document.body.style.background = '';
-          document.body.style.color = '';
-        }
-      }
-
-      return (
-        <main className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-2">
-              <div className="p-6 rounded-3xl glass border border-slate-700 shadow-lg">
-                <Header onAddSample={addSample} theme={theme} toggleTheme={toggleTheme} />
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <DemoCard title="Counter">
-                    <Counter />
-                  </DemoCard>
-
-                  <DemoCard title="Todo">
-                    <TodoApp items={items} setItems={setItems} />
-                  </DemoCard>
-                </div>
-
-                <div className="mt-4 text-sm text-slate-400">Tip: tekan tombol "Tambah contoh" untuk mengisi daftar tugas, atau klik theme button untuk toggle theme sederhana.</div>
-              </div>
-            </div>
-
-            <div>
-              <div className="p-6 rounded-3xl glass border border-slate-700 shadow-lg h-full flex flex-col gap-4">
-                <div className="text-lg font-semibold">Interaktivitas</div>
-                <div className="text-sm text-slate-300">Status tugas singkat</div>
-                <div className="flex-1 overflow-auto">
-                  <ul className="space-y-2">
-                    {items.length===0 ? (
-                      <li className="text-slate-400">Tidak ada aktivitas.</li>
-                    ) : (
-                      items.map(it => (
-                        <li key={it.id} className="p-2 rounded-md bg-slate-800/30">{it.text} {it.done ? <span className="text-xs text-emerald-300">(selesai)</span> : ''}</li>
-                      ))
-                    )}
-                  </ul>
-                </div>
-                <div className="text-xs text-slate-500">Single-file demo — cocok untuk belajar konsep-komponen dan memperlihatkan interaksi sederhana.</div>
-              </div>
-            </div>
-          </div>
-
-          <footer className="text-center text-xs text-slate-500">Made with ❤️ — single-file React + Tailwind demo</footer>
-        </main>
-      );
+    function typewriter(text, el, speed=20){
+      el.textContent = '';
+      let i=0;
+      return new Promise(resolve=>{
+        typing = setInterval(()=>{
+          el.textContent = text.slice(0,i+1);
+          i++;
+          if(i>=text.length){
+            clearInterval(typing); typing=null; resolve();
+          }
+        }, speed);
+      });
     }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    // Confetti
+    function resize(){
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    }
+    window.addEventListener('resize', ()=>{resize();});
+
+    function spawnConfetti(){
+      const w = canvas.width, h = canvas.height;
+      for(let i=0;i<80;i++){
+        confetti.push({
+          x: Math.random()*w,
+          y: -Math.random()*h,
+          r: 3+Math.random()*6,
+          dx: -1 + Math.random()*2,
+          dy: 1+Math.random()*3,
+          color: ['#ff476f','#ffd166','#7bd389','#7b4cff'][Math.floor(Math.random()*4)],
+          rot: Math.random()*360,
+          dRot: (-2+Math.random()*4)
+        });
+      }
+    }
+
+    function stepConfetti(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=confetti.length-1;i>=0;i--){
+        const p = confetti[i];
+        p.x += p.dx; p.y += p.dy; p.rot += p.dRot;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);
+        ctx.restore();
+        if(p.y>canvas.height+20) confetti.splice(i,1);
+      }
+    }
+
+    function startConfetti(){
+      resize();
+      spawnConfetti();
+      function loop(){
+        stepConfetti();
+        if(confetti.length>0) confettiAnim = requestAnimationFrame(loop);
+        else confettiAnim = null;
+      }
+      if(!confettiAnim) loop();
+    }
+
+    function stopConfetti(){
+      confetti = [];
+      if(confettiAnim){ cancelAnimationFrame(confettiAnim); confettiAnim=null; }
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+
+    async function play(){
+      const msg = makeMessage();
+      stopConfetti();
+      if(typing) clearInterval(typing);
+      await typewriter('🎉 ' + (greetInput.value.trim()||'Barakallah fii umrik') + ' ' + (nameInput.value.trim()||'') + "\n\n", render, 30);
+      await typewriter(msg.split('\n\n')[1] ? msg.split('\n\n')[1] : msg, render, 22);
+      startConfetti();
+    }
+
+    playBtn.addEventListener('click', ()=>{ play(); });
+    stopBtn.addEventListener('click', ()=>{ if(typing) clearInterval(typing); typing=null; stopConfetti(); });
+
+    // Download current HTML as single file
+    downloadBtn.addEventListener('click', ()=>{
+      const blob = new Blob([generatePage()], {type:'text/html;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'index.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    function generatePage(){
+      // produce a copy of this file but with current inputs baked in
+      const doc = `<!doctype html>\n<html lang=\"id\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Selamat Ulang Tahun</title>\n<style>html,body{margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#fffaf6,#fff);}</style>\n</head>\n<body>\n<pre style=\"white-space:pre-wrap;font-family:inherit;padding:28px;max-width:800px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.06)\">${escapeHtml(''+greetInput.value+' '+nameInput.value+'\n\n'+messageInput.value)}</pre>\n</body>\n</html>`;
+      return doc;
+    }
+
+    function escapeHtml(s){
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,"&#39;").replace(/\n/g,'\n');
+    }
+
+    // small UX: press Enter in name to focus message
+    nameInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ messageInput.focus(); e.preventDefault(); }});
+
+    // init
+    resize();
+    render.textContent = makeMessage();
+
   </script>
 </body>
 </html>
