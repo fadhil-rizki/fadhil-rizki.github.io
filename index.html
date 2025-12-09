@@ -51,13 +51,17 @@
         <label for="message">Pesan (bisa multi baris)</label>
         <textarea id="message">Di hari spesial ini, aku cuma pengen kamu tahu satu hal:
 kamu berhak dapat hal-hal baik dalam hidupmu.
+
 Semoga Allah selalu jagain kamu,
-ngasih ketenangan di hati, dan ngelancarake semua urusanmu.
+ngasih ketenangan di hati, dan melancarkan semua urusanmu.
+
 Kalau lagi capek, semoga diberi kekuatan.
 Kalau lagi bingung, semoga diberi jalan.
 Kalau lagi sedih, semoga cepat diganti sama kebahagiaan.
+
 Selamat ulang tahun ya, Sarah.
 Semoga tahun ini jadi tahun yang lebih lembut buat kamu.
+
 Thank you.</textarea>
       </div>
 
@@ -179,12 +183,15 @@ Thank you.</textarea>
     }
 
     async function play(){
-      const msg = makeMessage();
       stopConfetti();
       if(typing) clearInterval(typing);
-      await typewriter('🎉 ' + (greetInput.value.trim()||'Barakallah fii umrik') + ' ' + (nameInput.value.trim()||'') + "\n\n", render, 30);
-      await typewriter(msg.split('\n\n')[1] ? msg.split('\n\n')[1] : msg, render, 22);
-      startConfetti();
+
+      const greetLine = "🎉 " + (greetInput.value.trim() || "Barakallah fii umrik") + " " + (nameInput.value.trim() || "") + "\n\n";
+      const msg = greetLine + messageInput.value.trim();
+
+      await typewriter(msg, render, 22);
+
+      startConfetti();();();
     }
 
     playBtn.addEventListener('click', ()=>{ play(); });
@@ -218,4 +225,3 @@ Thank you.</textarea>
   </script>
 </body>
 </html>
-
