@@ -1,55 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Selamat Ulang Tahun — Surprise</title>
-  <style>
-    :root{--bg:#fffaf6;--card:#ffffff;--accent:#7b4cff;--muted:#6b6b6b}
-    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
-    body{margin:0;background:linear-gradient(180deg,var(--bg),#fff);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-    .wrap{width:100%;max-width:760px}
-    .card{background:var(--card);border-radius:16px;padding:28px 32px;box-shadow:0 10px 30px rgba(43,26,79,0.08)}
-    h1{margin:0;font-size:26px;color:var(--accent)}
-    p.lead{color:var(--muted);margin:8px 0 20px}
-    .row{display:flex;gap:12px;align-items:center}
-    .col{flex:1}
-    label{display:block;font-size:12px;color:#444;margin-bottom:6px}
-    input[type=text]{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #eee;background:#fbfbfb}
-    textarea{width:100%;min-height:90px;padding:10px;border-radius:10px;border:1px solid #eee;background:#fbfbfb}
-    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer}
-    .btn.ghost{background:transparent;border:1px solid #eee;color:#333}
-    .preview{margin-top:20px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbf8ff);min-height:120px;position:relative;overflow:hidden}
-    .message{white-space:pre-wrap;font-size:15px;color:#222}
-    .small{font-size:13px;color:#666;margin-top:8px}
-    footer{margin-top:18px;color:#888;font-size:13px}
-    .controls{display:flex;gap:10px;flex-wrap:wrap}
-    .confetti-canvas{position:absolute;inset:0;pointer-events:none}
-    .center-btn{display:flex;gap:8px;align-items:center}
-    .download{background:#06b6d4}
-    .play{background:#10b981}
-    @media(max-width:560px){.row{flex-direction:column}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ucapan Ulang Tahun</title>
+<style>
+  body{
+    font-family: Arial, sans-serif;
+    background: #f5f2ff;
+    margin:0;
+    padding:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+  }
+  .card{
+    background:#fff;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    width:100%;
+    max-width:600px;
+  }
+  h2{
+    color:#6a4cff;
+    margin:0;
+  }
+  label{
+    font-size:14px;
+    display:block;
+    margin-top:15px;
+  }
+  input, textarea{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    font-size:14px;
+  }
+  textarea{ min-height:120px; }
+  button{
+    background:#6a4cff;
+    color:#fff;
+    border:none;
+    padding:10px 16px;
+    margin-top:15px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+  }
+  #output{
+    margin-top:20px;
+    white-space:pre-wrap;
+    background:#faf7ff;
+    padding:20px;
+    border-radius:12px;
+    min-height:120px;
+    font-size:15px;
+    border:1px solid #eee;
+  }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card" role="main">
-      
+<div class="card">
+  <h2>Ucapan Ulang Tahun 🎉</h2>
 
-      <div class="row">
-        <div class="col">
-          <label for="name">Nama</label>
-          <input id="name" type="text" value="Sarah" />
-        </div>
-        <div class="col">
-          <label for="greet">Kata pembuka (opsional)</label>
-          <input id="greet" type="text" value="Barakallah fii umrik," />
-        </div>
-      </div>
+  <label>Nama</label>
+  <input id="name" value="Sarah" />
 
-      <div style="margin-top:12px">
-        <label for="message">Pesan (bisa multi baris)</label>
-        <textarea id="message">Di hari spesial ini, aku cuma pengen kamu tahu satu hal:
+  <label>Kata Pembuka</label>
+  <input id="greet" value="Barakallah fii umrik," />
+
+  <label>Isi Pesan</label>
+  <textarea id="msg">Di hari spesial ini, aku cuma pengen kamu tahu satu hal:
 kamu berhak dapat hal-hal baik dalam hidupmu.
 
 Semoga Allah selalu jagain kamu,
@@ -63,165 +88,39 @@ Selamat ulang tahun ya, Sarah.
 Semoga tahun ini jadi tahun yang lebih lembut buat kamu.
 
 Thank you.</textarea>
-      </div>
 
-      <div style="margin-top:12px" class="controls">
-        <button id="play" class="btn play">Play 🎉</button>
-        <button id="stop" class="btn ghost">Stop</button>
-        <button id="download" class="btn download">Download HTML</button>
-        <div style="flex:1"></div>
-        <div class="center-btn">
-          <label style="font-size:13px;color:#555;margin-right:8px">Mode tulus</label>
-        </div>
-      </div>
+  <button onclick="playMsg()">Play</button>
 
-      <div class="preview" id="preview">
-        <canvas class="confetti-canvas" id="c"></canvas>
-        <div style="position:relative;z-index:2">
-          <div class="message" id="render"></div>
-        </div>
-      </div>
+  <div id="output"></div>
+</div>
 
-      
-    </div>
-  </div>
-
-  <script>
-    // Elements
-    const nameInput = document.getElementById('name');
-    const greetInput = document.getElementById('greet');
-    const messageInput = document.getElementById('message');
-    const playBtn = document.getElementById('play');
-    const stopBtn = document.getElementById('stop');
-    const downloadBtn = document.getElementById('download');
-    const render = document.getElementById('render');
-    const canvas = document.getElementById('c');
-    const ctx = canvas.getContext('2d');
-
-    // Typewriter + simple timeline
-    let typing = null;
-    let confetti = [];
-    let confettiAnim = null;
-
-    function makeMessage(){
-      const name = nameInput.value.trim() || 'Teman';
-      const greet = greetInput.value.trim();
-      const body = messageInput.value.trim();
-      let full = '';
-      if(greet) full += greet + ' ' + name + '\n\n';
-      full += body;
-      return full;
-    }
-
-    function typewriter(text, el, speed=20){
-      el.textContent = '';
-      let i=0;
-      return new Promise(resolve=>{
-        typing = setInterval(()=>{
-          el.textContent = text.slice(0,i+1);
-          i++;
-          if(i>=text.length){
-            clearInterval(typing); typing=null; resolve();
-          }
-        }, speed);
-      });
-    }
-
-    // Confetti
-    function resize(){
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
-    }
-    window.addEventListener('resize', ()=>{resize();});
-
-    function spawnConfetti(){
-      const w = canvas.width, h = canvas.height;
-      for(let i=0;i<80;i++){
-        confetti.push({
-          x: Math.random()*w,
-          y: -Math.random()*h,
-          r: 3+Math.random()*6,
-          dx: -1 + Math.random()*2,
-          dy: 1+Math.random()*3,
-          color: ['#ff476f','#ffd166','#7bd389','#7b4cff'][Math.floor(Math.random()*4)],
-          rot: Math.random()*360,
-          dRot: (-2+Math.random()*4)
-        });
+<script>
+function typeWriter(full, element, speed = 25){
+  element.textContent = "";
+  let i = 0;
+  return new Promise(resolve => {
+    let interval = setInterval(() => {
+      element.textContent += full.charAt(i);
+      i++;
+      if(i >= full.length){
+        clearInterval(interval);
+        resolve();
       }
-    }
+    }, speed);
+  });
+}
 
-    function stepConfetti(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(let i=confetti.length-1;i>=0;i--){
-        const p = confetti[i];
-        p.x += p.dx; p.y += p.dy; p.rot += p.dRot;
-        ctx.save();
-        ctx.translate(p.x,p.y);
-        ctx.rotate(p.rot*Math.PI/180);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);
-        ctx.restore();
-        if(p.y>canvas.height+20) confetti.splice(i,1);
-      }
-    }
+async function playMsg(){
+  const name = document.getElementById("name").value.trim();
+  const greet = document.getElementById("greet").value.trim();
+  const body = document.getElementById("msg").value;
 
-    function startConfetti(){
-      resize();
-      spawnConfetti();
-      function loop(){
-        stepConfetti();
-        if(confetti.length>0) confettiAnim = requestAnimationFrame(loop);
-        else confettiAnim = null;
-      }
-      if(!confettiAnim) loop();
-    }
+  const out = document.getElementById("output");
 
-    function stopConfetti(){
-      confetti = [];
-      if(confettiAnim){ cancelAnimationFrame(confettiAnim); confettiAnim=null; }
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-    }
+  const finalText = `🎉 ${greet} ${name}\n\n${body}`;
 
-    async function play(){
-      stopConfetti();
-      if(typing) clearInterval(typing);
-
-      const greetLine = "🎉 " + (greetInput.value.trim() || "Barakallah fii umrik") + " " + (nameInput.value.trim() || "") + "\n\n";
-      const msg = greetLine + messageInput.value.trim();
-
-      await typewriter(msg, render, 22);
-
-      startConfetti();();();
-    }
-
-    playBtn.addEventListener('click', ()=>{ play(); });
-    stopBtn.addEventListener('click', ()=>{ if(typing) clearInterval(typing); typing=null; stopConfetti(); });
-
-    // Download current HTML as single file
-    downloadBtn.addEventListener('click', ()=>{
-      const blob = new Blob([generatePage()], {type:'text/html;charset=utf-8'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'index.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
-
-    function generatePage(){
-      // produce a copy of this file but with current inputs baked in
-      const doc = `<!doctype html>\n<html lang=\"id\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Selamat Ulang Tahun</title>\n<style>html,body{margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#fffaf6,#fff);}</style>\n</head>\n<body>\n<pre style=\"white-space:pre-wrap;font-family:inherit;padding:28px;max-width:800px;margin:auto;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.06)\">${escapeHtml(''+greetInput.value+' '+nameInput.value+'\n\n'+messageInput.value)}</pre>\n</body>\n</html>`;
-      return doc;
-    }
-
-    function escapeHtml(s){
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,"&#39;").replace(/\n/g,'\n');
-    }
-
-    // small UX: press Enter in name to focus message
-    nameInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ messageInput.focus(); e.preventDefault(); }});
-
-    // init
-    resize();
-    render.textContent = makeMessage();
-
-  </script>
+  await typeWriter(finalText, out, 18);
+}
+</script>
 </body>
 </html>
