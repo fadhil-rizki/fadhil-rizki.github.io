@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Pertanyaan Buat Sarah</title>
+<title>Pertanyaan Buat Mila</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
     :root{
@@ -358,7 +358,7 @@
 
 <body>
 
-<h2>Pertanyaan buat <span id="nama">Sarah</span> 💗</h2>
+<h2>Pertanyaan buat <span id="nama">Mila</span> 💗</h2>
 
 <div class="prefs">
     <button id="toggleSound" class="toggle" title="Toggle suara">Suara: <span id="soundState">On</span><span id="soundBeat" class="sound-beat"></span></button>
@@ -529,14 +529,14 @@
             </svg>
         </div>
 
-        <div id="box" aria-live="polite">Klik tombol di bawah ya, Sarah.</div>
+        <div id="box" aria-live="polite">Klik tombol di bawah ya, Mila.</div>
 
         <div class="controls">
             <button id="btnTanya" onclick="tanya()">Tanyain Aku 💬</button>
             <button onclick="tambahKeLembar()">+ Tambah ke Lembar Jawab</button>
         </div>
 
-        <input type="text" id="jawaban" placeholder="Tulis jawaban Sarah di sini...">
+        <input type="text" id="jawaban" placeholder="Tulis jawaban Mila di sini...">
 
         <div class="controls" style="margin-top:8px">
             <button onclick="kirim()">Kirim Jawaban</button>
@@ -558,8 +558,6 @@
         <div id="lembarList">
             <!-- items akan dirender di sini -->
         </div>
-
-        <div class="muted">Tambahkan pertanyaan yang muncul ke lembar, Sarah bisa jawab beberapa sekaligus lalu cetak atau simpan sebagai PDF. Setiap jawaban menyimpan timestamp & reaksi (emoji); kamu bisa ubah reaksi untuk tiap jawaban.</div>
     </div>
 </div>
 
@@ -569,14 +567,14 @@
     // --- data & storage ---
     // Each question now includes a type to influence expression
     const pertanyaan = [
-        {text:"Sarah, hari ini ada hal kecil yang bikin kamu seneng nggak?", type:"soft"},
+        {text:"Mila, hari ini ada hal kecil yang bikin kamu seneng nggak?", type:"soft"},
         {text:"Kalau sekarang boleh milih suasana, kamu prefer yang tenang atau rame?", type:"soft"},
         {text:"Akhir-akhir ini kamu lagi kepengen makanan tertentu nggak?", type:"soft"},
         {text:"Kalau lagi capek biasanya kamu ngapain biar enakan?", type:"soft"},
-        {text:"Hal paling nyaman buat kamu itu apa sih, Sarah?", type:"soft"},
+        {text:"Hal paling nyaman buat kamu itu apa sih, Mila?", type:"soft"},
         {text:"Ada lagu yang lagi sering kamu puter akhir-akhir ini?", type:"soft"},
         {text:"Kalau kamu dikasih 1 hari buat istirahat full, kamu mau ngapain?", type:"soft"},
-        {text:"Sarah tipe yang gampang kebawa suasana atau tetep chill?", type:"soft"},
+        {text:"Mila tipe yang gampang kebawa suasana atau tetep chill?", type:"soft"},
 
         {text:"Menurutmu kenapa sendal jepit selalu hilang sebelah duluan?", type:"funny"},
         {text:"Kalau kucing bisa ngomong, suaranya bakal cempreng atau berat?", type:"funny"},
@@ -588,14 +586,14 @@
         {text:"Menurutmu kenapa bantal favorit selalu menang dari bantal lain?", type:"funny"}
     ];
 
-    const STORAGE_KEY = "lembarJawab_sarah_v2"; // bump version schema
+    const STORAGE_KEY = "lembarJawab_mila_v2"; // bump version schema
     // lembar structure: [{ question, answer, savedAt (ISO), reaction (emoji) }, ...]
     let lembar = loadLembar();
 
     // preferences
-    let soundEnabled = (localStorage.getItem("sarah_sound") !== "false"); // default true
-    let confettiEnabled = (localStorage.getItem("sarah_confetti") !== "false"); // default true
-    let mascotType = localStorage.getItem("sarah_mascot") || "cat";
+    let soundEnabled = (localStorage.getItem("mila_sound") !== "false"); // default true
+    let confettiEnabled = (localStorage.getItem("mila_confetti") !== "false"); // default true
+    let mascotType = localStorage.getItem("mila_mascot") || "cat";
 
     // DOM refs
     const boxEl = document.getElementById("box");
@@ -622,7 +620,7 @@
         });
         mascotOptions.forEach(b => b.classList.toggle("active", b.dataset.m === type));
         mascotType = type;
-        if (!skipSave) localStorage.setItem("sarah_mascot", type);
+        if (!skipSave) localStorage.setItem("mila_mascot", type);
     }
     mascotOptions.forEach(b => {
         b.addEventListener("click", () => setMascot(b.dataset.m));
@@ -631,12 +629,12 @@
 
     document.getElementById("toggleSound").addEventListener("click", () => {
         soundEnabled = !soundEnabled;
-        localStorage.setItem("sarah_sound", soundEnabled ? "true" : "false");
+        localStorage.setItem("mila_sound", soundEnabled ? "true" : "false");
         updatePrefUI();
     });
     document.getElementById("toggleConfetti").addEventListener("click", () => {
         confettiEnabled = !confettiEnabled;
-        localStorage.setItem("sarah_confetti", confettiEnabled ? "true" : "false");
+        localStorage.setItem("mila_confetti", confettiEnabled ? "true" : "false");
         updatePrefUI();
     });
 
@@ -915,11 +913,11 @@
     function kirim() {
         const isi = document.getElementById("jawaban").value.trim();
         if (isi === "") {
-            hasilEl.innerHTML = "Kamu belum jawab apa-apa, Sarah 😆";
+            hasilEl.innerHTML = "Kamu belum jawab apa-apa, Mila 😆";
             if (soundEnabled) playPop();
             setExpression(mascotType, "neutral", 700);
         } else {
-            hasilEl.innerHTML = "Jawaban Sarah: <br><b>“" + escapeHtml(isi) + "”</b> 💗";
+            hasilEl.innerHTML = "Jawaban Mila: <br><b>“" + escapeHtml(isi) + "”</b> 💗";
             if (soundEnabled) playSuccess();
             setExpression(mascotType, "smile", 1000);
             if (confettiEnabled) launchConfetti(20);
@@ -1234,12 +1232,10 @@
     });
 
     // expose some methods for debugging in console if needed
-    window._sarah = {
+    window._mila = {
         launchConfetti, playPop, playSaveSound, playSuccess, setMascot, setExpression, lipSyncForText
     };
 </script>
 
 </body>
 </html>
-
-
