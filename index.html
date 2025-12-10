@@ -2,1239 +2,153 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Pertanyaan Buat Mila</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mila Mood Tracker</title>
 <style>
-    :root{
-        --pink-500: #ff6fbe;
-        --pink-400: #ff4fab;
-        --bg: #fff7fd;
-        --card: #ffffff;
-        --muted: #7a7a7a;
-    }
-
     body {
-        background: var(--bg);
+        background: #fff7fd;
         font-family: "Poppins", sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-        flex-direction: column;
         margin: 0;
-        padding: 30px;
-        text-align: center;
-        color: #333;
-    }
-
-    .container {
-        max-width: 980px;
-        width: 100%;
+        padding: 0;
         display: flex;
-        gap: 20px;
-        align-items: flex-start;
         justify-content: center;
-        margin: 0 auto;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
     }
 
     .card {
-        background: var(--card);
-        padding: 20px 25px;
-        border-radius: 15px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-        width: 340px;
-        min-height: 80px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 17px;
-        color: #333;
-        transition: .2s;
+        background: white;
+        width: 360px;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
     h2 {
+        margin-bottom: 10px;
         color: #d55da8;
-        margin-bottom: 12px;
-        font-weight: 600;
     }
 
-    /* mascot area */
-    .mascot-wrap {
-        width: 128px;
-        height: 128px;
-        margin-bottom: 8px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        position: relative;
-    }
-
-    .mascot {
-        width: 100%;
-        height: 100%;
-        transform-origin: center;
-        transition: transform .22s ease;
-    }
-
-    /* floating idle motion */
-    .mascot.idle {
-        animation: floaty 3.6s ease-in-out infinite;
-    }
-    @keyframes floaty {
-        0% { transform: translateY(0) }
-        50% { transform: translateY(-6px) }
-        100% { transform: translateY(0) }
-    }
-
-    /* complex sprite-like animation states */
-    .mascot.animate { animation: mascot-excite .9s cubic-bezier(.2,.9,.3,1); }
-    @keyframes mascot-excite {
-        0% { transform: scale(1) translateY(0) }
-        30% { transform: scale(1.08) translateY(-10px) rotate(-4deg) }
-        60% { transform: scale(0.98) translateY(4px) rotate(3deg) }
-        100% { transform: scale(1) translateY(0) rotate(0) }
-    }
-
-    /* blink keyframes — used by SVG parts having class "blink" */
-    .blink { transform-origin: center; animation: blink 4s infinite; }
-    @keyframes blink {
-        0%, 94% { transform: scaleY(1); }
-        95% { transform: scaleY(0.05); }
-        100% { transform: scaleY(1); }
-    }
-
-    /* paw wave*/
-    .wave { transform-origin: top left; transition: transform .18s ease; }
-    .wave.animate-hand { animation: paw-wave .7s ease; }
-    @keyframes paw-wave {
-        0% { transform: rotate(0); }
-        40% { transform: rotate(-26deg); }
-        70% { transform: rotate(-8deg); }
-        100% { transform: rotate(0); }
-    }
-
-    /* mouth expression handling: show/hide via classes on svg root */
-    .mouth { transition: opacity .12s linear; opacity: 0; }
-    svg.expr-neutral .mouth.neutral { opacity: 1; }
-    svg.expr-smile .mouth.smile { opacity: 1; }
-    svg.expr-surprised .mouth.surprised { opacity: 1; }
-    svg.expr-tongue .mouth.tongue { opacity: 1; }
-    svg.expr-ngantuk .mouth.ngantuk { opacity: 1; }
-    svg.expr-kaget-super .mouth.kaget-super { opacity: 1; }
-    svg.expr-speak .mouth.speak { opacity: 1; }
-
-    /* small extra frame animation for mouth/eyes when expressing */
-    .frame { opacity: 0; transition: opacity .12s linear; }
-    .frame.active { opacity: 1; }
-
-    /* speaking state styling (lip-sync) */
-    svg.expr-speak { /* when speaking, keep animate class too */ }
-    svg.expr-speak .mouth.speak { opacity: 1; }
-
-    #box {
-        width: 100%;
-        min-height: 84px;
+    .moods {
+        margin-top: 15px;
         display: flex;
-        align-items: center;
         justify-content: center;
-        font-size: 17px;
-        color: #333;
-        margin-bottom: 12px;
-        padding: 10px;
-        border-radius: 10px;
-        transition: transform .18s ease, box-shadow .18s ease, opacity .18s;
-    }
-
-    .controls {
-        display: flex;
-        gap: 8px;
+        gap: 10px;
         flex-wrap: wrap;
-        justify-content: center;
+    }
+
+    .mood {
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: #f7f7f7;
+        cursor: pointer;
+        border: 1px solid #eee;
+        transition: .2s;
+        font-size: 15px;
+    }
+
+    .mood:hover {
+        transform: scale(1.05);
+        background: #ffe5f4;
+        border-color: #ffb3da;
     }
 
     button {
+        margin-top: 15px;
         padding: 10px 16px;
-        border: none;
-        border-radius: 10px;
-        background: var(--pink-500);
+        background: #ff6fb3;
         color: white;
-        font-size: 14px;
-        cursor: pointer;
-        transition: transform .12s ease, background .12s;
-        font-weight: 600;
-        margin: 5px 0;
-    }
-
-    button.small { padding: 7px 10px; font-size: 13px; border-radius: 8px; }
-    button:hover { background: var(--pink-400); transform: translateY(-2px); }
-
-    #jawaban {
-        margin-top: 10px;
-        width: 100%;
-        padding: 10px;
-        border: 2px solid #ff99cf;
-        border-radius: 10px;
-        font-size: 15px;
-        outline: none;
-        box-sizing: border-box;
-    }
-
-    #hasil {
-        margin-top: 10px;
-        font-size: 15px;
-        color: #444;
-        min-height: 36px;
-    }
-
-    #nama {
-        color: #ff4fab;
-        font-weight: 700;
-    }
-
-    /* mascot selector */
-    .mascot-select {
-        display:flex;
-        gap:6px;
-        justify-content:center;
-        margin-bottom:10px;
-    }
-    .mascot-option {
-        background: transparent;
-        border: 1px dashed rgba(0,0,0,0.06);
-        padding: 6px 8px;
-        border-radius: 999px;
-        cursor:pointer;
-        font-size:18px;
-    }
-    .mascot-option.active {
-        background: linear-gradient(90deg, rgba(255,111,190,0.12), rgba(255,111,190,0.04));
-        border: 1px solid rgba(255,111,190,0.18);
-    }
-
-    /* Lembar Jawab side */
-    .sheet {
-        width: 580px;
-        max-height: 75vh;
-        overflow: auto;
-        padding: 16px;
-        box-sizing: border-box;
-    }
-
-    .sheet h3 {
-        margin-top: 0;
-        color: #d55da8;
-    }
-
-    .qa {
-        border: 2px dashed #ffe6f2;
-        padding: 12px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        text-align: left;
-        background: #fffafc;
-        position: relative;
-    }
-
-    .qa .question {
-        font-weight: 600;
-        color: #8a2a5f;
-        margin-bottom: 8px;
-    }
-
-    .qa textarea {
-        width: 100%;
-        min-height: 68px;
-        resize: vertical;
-        padding: 8px;
-        border-radius: 8px;
-        border: 1px solid #ffd6eb;
-        box-sizing: border-box;
-        font-family: inherit;
-    }
-
-    .qa .row {
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-        margin-top: 8px;
-    }
-
-    .muted {
-        color: var(--muted);
-        font-size: 13px;
-    }
-
-    .meta {
-        display:flex;
-        gap:8px;
-        align-items:center;
-        margin-top:8px;
-    }
-    .reaction {
-        font-size:18px;
-        cursor:pointer;
-    }
-    .timestamp {
-        font-size:12px;
-        color:#666;
-    }
-
-    /* reaction picker small buttons */
-    .reactions-set button {
-        background: transparent;
         border: none;
+        border-radius: 12px;
         cursor: pointer;
-        font-size: 18px;
-        padding: 4px;
+        font-weight: 600;
+        transition: 0.2s;
     }
 
-    /* print only the sheet */
-    @media print {
-        body * { visibility: hidden; }
-        .printable, .printable * { visibility: visible; }
-        .printable { position: absolute; left: 0; top: 0; width: 100%; }
+    button:hover {
+        background: #ff4fab;
+        transform: scale(1.03);
     }
 
-    /* responsive */
-    @media (max-width: 1000px) {
-        .container {
-            flex-direction: column;
-            align-items: center;
-        }
-        .sheet { width: 100%; max-width: 720px; }
-        .card { width: 100%; max-width: 720px; }
+    #last, #history {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #555;
     }
 
-    /* top-right controls */
-    .prefs {
-        display:flex;
-        gap:8px;
-        align-items:center;
-        justify-content:center;
-        margin-bottom:8px;
-    }
-
-    .toggle {
-        background: transparent;
-        border: 1px solid rgba(0,0,0,0.06);
-        color: #444;
-        padding: 6px 10px;
-        border-radius: 999px;
-        cursor: pointer;
-        font-size: 13px;
-    }
-
-    /* confetti canvas */
-    #confetti-canvas {
-        position: fixed;
-        pointer-events: none;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-    }
-
-    .sound-beat {
-        display:inline-block;
-        width:10px;
-        height:10px;
-        border-radius:50%;
-        background:var(--pink-500);
-        margin-left:6px;
-        vertical-align:middle;
-        transform-origin:center;
-        animation: beat 1s infinite;
-        opacity:.88;
-    }
-    .sound-off .sound-beat { display:none; }
-    @keyframes beat {
-        0% { transform: scale(1); opacity: .9; }
-        50% { transform: scale(1.4); opacity: .5; }
-        100% { transform: scale(1); opacity: .9; }
-    }
 </style>
 </head>
-
 <body>
 
-<h2>Pertanyaan buat <span id="nama">Mila</span> 💗</h2>
+<div class="card">
+    <h2>Mila’s Mood Tracker 💗</h2>
+    <div>Pilih mood kamu hari ini ya, Mila.</div>
 
-<div class="prefs">
-    <button id="toggleSound" class="toggle" title="Toggle suara">Suara: <span id="soundState">On</span><span id="soundBeat" class="sound-beat"></span></button>
-    <button id="toggleConfetti" class="toggle" title="Toggle animasi confetti">Confetti: <span id="confettiState">On</span></button>
-</div>
-
-<div class="container">
-    <div class="card">
-        <!-- Mascot selector + mascot -->
-        <div class="mascot-select" aria-hidden="false">
-            <button class="mascot-option" data-m="cat" title="Kucing">🐱</button>
-            <button class="mascot-option" data-m="panda" title="Panda">🐼</button>
-            <button class="mascot-option" data-m="bear" title="Beruang">🐻</button>
-        </div>
-
-        <div class="mascot-wrap" aria-hidden="false">
-            <!-- Cat -->
-            <svg id="mascot-cat" class="mascot idle expr-neutral" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Kucing lucu">
-                <!-- ears -->
-                <g fill="#FFB66E">
-                    <path d="M24 22 Q12 12 24 36" />
-                    <path d="M96 22 Q108 12 96 36" />
-                </g>
-                <!-- face -->
-                <circle cx="60" cy="64" r="34" fill="#FFD9B3" stroke="#EAA56A" stroke-width="1"/>
-                <!-- eyes frames -->
-                <g id="cat-eye-left" transform="translate(46,58)">
-                    <ellipse class="frame neutral" cx="0" cy="0" rx="6" ry="6" fill="#222"/>
-                    <ellipse class="frame surprised" cx="0" cy="0" rx="8" ry="8" fill="#222" style="opacity:0"/>
-                    <ellipse class="frame sleepy" cx="0" cy="0" rx="6" ry="2" fill="#222" style="opacity:0"/>
-                </g>
-                <g id="cat-eye-right" transform="translate(74,58)">
-                    <ellipse class="frame neutral" cx="0" cy="0" rx="6" ry="6" fill="#222"/>
-                    <ellipse class="frame surprised" cx="0" cy="0" rx="8" ry="8" fill="#222" style="opacity:0"/>
-                    <ellipse class="frame sleepy" cx="0" cy="0" rx="6" ry="2" fill="#222" style="opacity:0"/>
-                </g>
-
-                <!-- mouth variants -->
-                <g class="mouth neutral">
-                    <path d="M52 74 q8 6 16 0" fill="none" stroke="#c76" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth smile">
-                    <path d="M50 72 q10 12 20 0" fill="none" stroke="#c76" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth surprised">
-                    <circle cx="60" cy="74" r="4" fill="#d97"/>
-                </g>
-                <g class="mouth tongue">
-                    <path d="M52 74 q8 12 16 0" fill="none" stroke="#c76" stroke-width="2" stroke-linecap="round"/>
-                    <ellipse cx="60" cy="78" rx="3" ry="2" fill="#ff8fb6"/>
-                </g>
-                <g class="mouth ngantuk">
-                    <path d="M52 74 q8 2 16 0" fill="none" stroke="#c76" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth kaget-super">
-                    <ellipse cx="60" cy="74" rx="6" ry="6" fill="#d97"/>
-                </g>
-                <g class="mouth speak">
-                    <rect x="54" y="72" width="12" height="6" rx="2" fill="#d97"/>
-                </g>
-
-                <!-- left paw waving -->
-                <g id="cat-paw" class="wave" transform="translate(30,80)">
-                    <ellipse cx="0" cy="0" rx="9" ry="6" fill="#FFD9B3"/>
-                </g>
-            </svg>
-
-            <!-- Panda -->
-            <svg id="mascot-panda" class="mascot idle expr-neutral" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Panda lucu" style="display:none">
-                <!-- ears -->
-                <circle cx="36" cy="26" r="12" fill="#111"/>
-                <circle cx="84" cy="26" r="12" fill="#111"/>
-                <!-- face -->
-                <circle cx="60" cy="64" r="34" fill="#fff" stroke="#ddd" stroke-width="1"/>
-                <!-- eye patches -->
-                <ellipse cx="46" cy="60" rx="11" ry="14" fill="#111"/>
-                <ellipse cx="74" cy="60" rx="11" ry="14" fill="#111"/>
-
-                <!-- eyes frames -->
-                <g transform="translate(46,62)">
-                    <circle class="frame neutral" cx="0" cy="0" r="4" fill="#fff"/>
-                    <ellipse class="frame surprised" cx="0" cy="0" rx="6" ry="8" fill="#fff" style="opacity:0"/>
-                    <rect class="frame sleepy" x="-3" y="2" width="6" height="2" rx="1" fill="#fff" style="opacity:0"/>
-                </g>
-                <g transform="translate(74,62)">
-                    <circle class="frame neutral" cx="0" cy="0" r="4" fill="#fff"/>
-                    <ellipse class="frame surprised" cx="0" cy="0" rx="6" ry="8" fill="#fff" style="opacity:0"/>
-                    <rect class="frame sleepy" x="-3" y="2" width="6" height="2" rx="1" fill="#fff" style="opacity:0"/>
-                </g>
-
-                <!-- mouth variants -->
-                <g class="mouth neutral">
-                    <path d="M52 72 q8 6 16 0" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth smile">
-                    <path d="M50 70 q10 10 20 0" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth surprised">
-                    <circle cx="60" cy="74" r="4" fill="#111"/>
-                </g>
-                <g class="mouth tongue">
-                    <path d="M52 72 q8 10 16 0" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-                    <ellipse cx="60" cy="76" rx="3" ry="2" fill="#ff8fb6"/>
-                </g>
-                <g class="mouth ngantuk">
-                    <path d="M52 74 q8 2 16 0" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth kaget-super">
-                    <ellipse cx="60" cy="74" rx="6" ry="6" fill="#111"/>
-                </g>
-                <g class="mouth speak">
-                    <rect x="54" y="72" width="12" height="6" rx="2" fill="#111"/>
-                </g>
-
-                <!-- paw -->
-                <g id="panda-paw" class="wave" transform="translate(90,82)">
-                    <ellipse cx="0" cy="0" rx="10" ry="7" fill="#111"/>
-                </g>
-            </svg>
-
-            <!-- Bear -->
-            <svg id="mascot-bear" class="mascot idle expr-neutral" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Beruang lucu" style="display:none">
-                <!-- ears -->
-                <circle cx="36" cy="28" r="11" fill="#8c5a2c"/>
-                <circle cx="84" cy="28" r="11" fill="#8c5a2c"/>
-                <!-- face -->
-                <circle cx="60" cy="64" r="34" fill="#DCA57D" stroke="#c98" stroke-width="1"/>
-
-                <!-- eyes frames -->
-                <g transform="translate(46,60)">
-                    <circle class="frame neutral" cx="0" cy="0" r="5" fill="#3a2a1c"/>
-                    <ellipse class="frame surprised" cx="0" cy="0" rx="7" ry="9" fill="#3a2a1c" style="opacity:0"/>
-                    <rect class="frame sleepy" x="-3" y="2" width="6" height="2" rx="1" fill="#3a2a1c" style="opacity:0"/>
-                </g>
-                <g transform="translate(74,60)">
-                    <circle class="frame neutral" cx="0" cy="0" r="5" fill="#3a2a1c"/>
-                    <ellipse class="frame surprised" cx="0" cy="0" rx="7" ry="9" fill="#3a2a1c" style="opacity:0"/>
-                    <rect class="frame sleepy" x="-3" y="2" width="6" height="2" rx="1" fill="#3a2a1c" style="opacity:0"/>
-                </g>
-
-                <!-- mouth variants -->
-                <g class="mouth neutral">
-                    <ellipse cx="60" cy="74" rx="8" ry="4" fill="#3a2a1c"/>
-                </g>
-                <g class="mouth smile">
-                    <path d="M52 72 q8 10 16 0" fill="none" stroke="#3a2a1c" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth surprised">
-                    <ellipse cx="60" cy="76" rx="4" ry="5" fill="#3a2a1c"/>
-                </g>
-                <g class="mouth tongue">
-                    <path d="M52 72 q8 10 16 0" fill="none" stroke="#3a2a1c" stroke-width="2" stroke-linecap="round"/>
-                    <ellipse cx="60" cy="76" rx="3" ry="2" fill="#ff8fb6"/>
-                </g>
-                <g class="mouth ngantuk">
-                    <path d="M52 74 q8 2 16 0" fill="none" stroke="#3a2a1c" stroke-width="2" stroke-linecap="round"/>
-                </g>
-                <g class="mouth kaget-super">
-                    <ellipse cx="60" cy="74" rx="6" ry="6" fill="#3a2a1c"/>
-                </g>
-                <g class="mouth speak">
-                    <rect x="54" y="72" width="12" height="6" rx="2" fill="#3a2a1c"/>
-                </g>
-
-                <g id="bear-paw" class="wave" transform="translate(30,86)">
-                    <ellipse cx="0" cy="0" rx="9" ry="6" fill="#DCA57D"/>
-                </g>
-            </svg>
-        </div>
-
-        <div id="box" aria-live="polite">Klik tombol di bawah ya, Mila.</div>
-
-        <div class="controls">
-            <button id="btnTanya" onclick="tanya()">Tanyain Aku 💬</button>
-            <button onclick="tambahKeLembar()">+ Tambah ke Lembar Jawab</button>
-        </div>
-
-        <input type="text" id="jawaban" placeholder="Tulis jawaban Mila di sini...">
-
-        <div class="controls" style="margin-top:8px">
-            <button onclick="kirim()">Kirim Jawaban</button>
-            <button onclick="simpanJawabanSekarang()" class="small">Simpan Sekarang</button>
-            <button onclick="cetakLembar()" class="small">Cetak</button>
-        </div>
-
-        <div id="hasil"></div>
+    <div class="moods">
+        <div class="mood" onclick="pilih('Happy')">😊 Happy</div>
+        <div class="mood" onclick="pilih('Calm')">😌 Calm</div>
+        <div class="mood" onclick="pilih('Tired')">😴 Tired</div>
+        <div class="mood" onclick="pilih('Meh')">😐 Meh</div>
     </div>
 
-    <div class="card sheet" id="lembarContainer">
-        <h3>Lembar Jawab</h3>
-        <div class="controls" style="justify-content: flex-start; margin-bottom: 8px;">
-            <button onclick="downloadJson()" title="Unduh lembar sebagai JSON" class="small">Export JSON</button>
-            <button onclick="importJson()" title="Impor JSON" class="small">Import JSON</button>
-            <button onclick="bersihkanLembar()" title="Kosongkan lembar ini" class="small">Bersihkan Lembar</button>
-        </div>
+    <button onclick="simpan()">Simpan Mood</button>
+    <button style="background:#ccc; color:#333;" onclick="hapus()">Hapus History</button>
 
-        <div id="lembarList">
-            <!-- items akan dirender di sini -->
-        </div>
-    </div>
+    <div id="last">Mood terakhir: —</div>
+    <div id="history">Belum ada history.</div>
 </div>
-
-<canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
 <script>
-    // --- data & storage ---
-    // Each question now includes a type to influence expression
-    const pertanyaan = [
-        {text:"Mila, hari ini ada hal kecil yang bikin kamu seneng nggak?", type:"soft"},
-        {text:"Kalau sekarang boleh milih suasana, kamu prefer yang tenang atau rame?", type:"soft"},
-        {text:"Akhir-akhir ini kamu lagi kepengen makanan tertentu nggak?", type:"soft"},
-        {text:"Kalau lagi capek biasanya kamu ngapain biar enakan?", type:"soft"},
-        {text:"Hal paling nyaman buat kamu itu apa sih, Mila?", type:"soft"},
-        {text:"Ada lagu yang lagi sering kamu puter akhir-akhir ini?", type:"soft"},
-        {text:"Kalau kamu dikasih 1 hari buat istirahat full, kamu mau ngapain?", type:"soft"},
-        {text:"Mila tipe yang gampang kebawa suasana atau tetep chill?", type:"soft"},
+let moodDipilih = null;
 
-        {text:"Menurutmu kenapa sendal jepit selalu hilang sebelah duluan?", type:"funny"},
-        {text:"Kalau kucing bisa ngomong, suaranya bakal cempreng atau berat?", type:"funny"},
-        {text:"Kenapa ya pas lapar semua makanan keliatan enak?", type:"funny"},
-        {text:"Menurutmu mie instan paling enak dimakan jam berapa?", type:"funny"},
-        {text:"Kalau otak lagi error, biasanya errornya di bagian mana?", type:"funny"},
-        {text:"Kamu tim mandi dulu atau rebahan dulu pas sampai rumah?", type:"funny"},
-        {text:"Kalau kamu punya superpower random, kamu mau bisa apa?", type:"funny"},
-        {text:"Menurutmu kenapa bantal favorit selalu menang dari bantal lain?", type:"funny"}
-    ];
+function pilih(mood) {
+    moodDipilih = mood;
+    document.getElementById("last").innerHTML = "Mood dipilih: <b>" + mood + "</b>";
+}
 
-    const STORAGE_KEY = "lembarJawab_mila_v2"; // bump version schema
-    // lembar structure: [{ question, answer, savedAt (ISO), reaction (emoji) }, ...]
-    let lembar = loadLembar();
-
-    // preferences
-    let soundEnabled = (localStorage.getItem("mila_sound") !== "false"); // default true
-    let confettiEnabled = (localStorage.getItem("mila_confetti") !== "false"); // default true
-    let mascotType = localStorage.getItem("mila_mascot") || "cat";
-
-    // DOM refs
-    const boxEl = document.getElementById("box");
-    const hasilEl = document.getElementById("hasil");
-    const soundStateEl = document.getElementById("soundState");
-    const confettiStateEl = document.getElementById("confettiState");
-    const confettiCanvas = document.getElementById("confetti-canvas");
-
-    // mascot elements
-    const mascotEls = {
-        cat: document.getElementById("mascot-cat"),
-        panda: document.getElementById("mascot-panda"),
-        bear: document.getElementById("mascot-bear")
-    };
-    const mascotOptions = document.querySelectorAll(".mascot-option");
-
-    // apply initial mascot
-    function setMascot(type, skipSave) {
-        Object.keys(mascotEls).forEach(k => {
-            const el = mascotEls[k];
-            if (!el) return;
-            if (k === type) { el.style.display = ""; el.classList.add("idle"); }
-            else { el.style.display = "none"; el.classList.remove("idle"); el.classList.remove("animate"); }
-        });
-        mascotOptions.forEach(b => b.classList.toggle("active", b.dataset.m === type));
-        mascotType = type;
-        if (!skipSave) localStorage.setItem("mila_mascot", type);
+function simpan() {
+    if (!moodDipilih) {
+        alert("Pilih mood dulu ya, Mila 💗");
+        return;
     }
-    mascotOptions.forEach(b => {
-        b.addEventListener("click", () => setMascot(b.dataset.m));
-    });
-    setMascot(mascotType, true);
 
-    document.getElementById("toggleSound").addEventListener("click", () => {
-        soundEnabled = !soundEnabled;
-        localStorage.setItem("mila_sound", soundEnabled ? "true" : "false");
-        updatePrefUI();
-    });
-    document.getElementById("toggleConfetti").addEventListener("click", () => {
-        confettiEnabled = !confettiEnabled;
-        localStorage.setItem("mila_confetti", confettiEnabled ? "true" : "false");
-        updatePrefUI();
+    let data = JSON.parse(localStorage.getItem("moodMila") || "[]");
+
+    data.unshift({
+        mood: moodDipilih,
+        waktu: new Date().toLocaleString()
     });
 
-    function updatePrefUI() {
-        soundStateEl.innerText = soundEnabled ? "On" : "Off";
-        confettiStateEl.innerText = confettiEnabled ? "On" : "Off";
-        document.body.classList.toggle("sound-off", !soundEnabled);
+    localStorage.setItem("moodMila", JSON.stringify(data));
+
+    render();
+}
+
+function hapus() {
+    localStorage.removeItem("moodMila");
+    render();
+}
+
+function render() {
+    let data = JSON.parse(localStorage.getItem("moodMila") || "[]");
+
+    if (data.length === 0) {
+        document.getElementById("last").innerHTML = "Mood terakhir: —";
+        document.getElementById("history").innerHTML = "Belum ada history.";
+        return;
     }
 
-    updatePrefUI();
+    document.getElementById("last").innerHTML =
+        "Mood terakhir: <b>" + data[0].mood + "</b> (" + data[0].waktu + ")";
 
-    // --- simple WebAudio synth for cute sounds (no external files) ---
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    let audioCtx = null;
-    function ensureAudioContext() {
-        if (!audioCtx) {
-            try { audioCtx = new AudioCtx(); }
-            catch (e) { console.warn("AudioContext not available", e); }
-        }
-    }
+    let list = data
+        .map(i => "• " + i.mood + " — <i>" + i.waktu + "</i>")
+        .join("<br>");
 
-    // mascot-specific sound variants
-    function playMascotSound(type, variant="pop") {
-        if (!soundEnabled) return;
-        ensureAudioContext();
-        if (!audioCtx) return;
-        if (type === "cat") {
-            if (variant==="pop") playChime(880, 0.10, "triangle");
-            else playChimeSeq([980, 1180], [0.12,0.08], "triangle");
-        } else if (type === "panda") {
-            if (variant==="pop") playChime(520, 0.14, "sine");
-            else playChimeSeq([520, 720, 620], [0.12,0.08,0.12], "sine");
-        } else if (type === "bear") {
-            if (variant==="pop") playChime(420, 0.12, "sine");
-            else playChimeSeq([420, 520], [0.14,0.12], "sine");
-        }
-    }
+    document.getElementById("history").innerHTML = list;
+}
 
-    function playChime(freq = 880, duration = 0.18, type = "sine") {
-        if (!soundEnabled) return;
-        ensureAudioContext();
-        if (!audioCtx) return;
-        const o = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        o.type = type;
-        o.frequency.value = freq;
-        o.connect(g);
-        g.connect(audioCtx.destination);
-        const now = audioCtx.currentTime;
-        g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(0.18, now + 0.01);
-        o.start(now);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-        o.stop(now + duration + 0.02);
-    }
-    function playChimeSeq(freqs, durations, type="sine") {
-        if (!soundEnabled) return;
-        ensureAudioContext();
-        if (!audioCtx) return;
-        let t = audioCtx.currentTime;
-        freqs.forEach((f,i) => {
-            const d = durations[i] || durations[durations.length-1] || 0.12;
-            const o = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-            o.type = type;
-            o.frequency.value = f;
-            o.connect(g);
-            g.connect(audioCtx.destination);
-            g.gain.setValueAtTime(0, t);
-            g.gain.linearRampToValueAtTime(0.16, t + 0.008);
-            o.start(t);
-            g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-            o.stop(t + d + 0.02);
-            t += d + 0.02;
-        });
-    }
-
-    function playPop() { playMascotSound(mascotType, "pop"); }
-    function playSaveSound() { playChime(660, 0.26, "sine"); }
-    function playSuccess() { playChime(1040, 0.34, "sine"); }
-
-    // --- confetti (simple particle system) ---
-    const confetti = {
-        ctx: null,
-        W: 0,
-        H: 0,
-        particles: [],
-        colors: ["#ff6fbe", "#ffd1ec", "#ff4fab", "#f6a6d8", "#ffb3e0", "#ffd9f2"],
-        isRunning: false
-    };
-
-    function initConfetti() {
-        confetti.ctx = confettiCanvas.getContext("2d");
-        resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
-    }
-    function resizeCanvas() {
-        confetti.W = confettiCanvas.width = window.innerWidth;
-        confetti.H = confettiCanvas.height = window.innerHeight;
-    }
-
-    function launchConfetti(amount = 28) {
-        if (!confettiEnabled) return;
-        if (!confetti.ctx) initConfetti();
-        for (let i=0;i<amount;i++){
-            confetti.particles.push(createParticle());
-        }
-        if (!confetti.isRunning) {
-            confetti.isRunning = true;
-            requestAnimationFrame(tickConfetti);
-        }
-    }
-
-    function createParticle() {
-        const x = Math.random() * confetti.W;
-        const y = -10 - (Math.random()*60);
-        const size = 6 + Math.random()*8;
-        return {
-            x, y,
-            vx: -1 + Math.random()*2,
-            vy: 2 + Math.random()*4,
-            size,
-            angle: Math.random()*360,
-            angularVel: (Math.random()-0.5)*0.2,
-            color: confetti.colors[Math.floor(Math.random()*confetti.colors.length)],
-            ttl: 80 + Math.random()*60
-        };
-    }
-
-    function tickConfetti() {
-        const ctx = confetti.ctx;
-        if (!ctx) return;
-        ctx.clearRect(0,0,confetti.W,confetti.H);
-        for (let i = confetti.particles.length-1; i>=0; i--) {
-            const p = confetti.particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += 0.06; // gravity
-            p.angle += p.angularVel;
-            p.ttl--;
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.angle);
-            ctx.fillStyle = p.color;
-            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
-            ctx.restore();
-            if (p.y > confetti.H + 50 || p.ttl <= 0) {
-                confetti.particles.splice(i,1);
-            }
-        }
-        if (confetti.particles.length > 0) {
-            requestAnimationFrame(tickConfetti);
-        } else {
-            confetti.isRunning = false;
-            ctx.clearRect(0,0,confetti.W,confetti.H);
-        }
-    }
-
-    // --- expression & sprite management ---
-    // setExpression supports: neutral, smile, surprised, tongue, ngantuk, kaget-super, speak
-    function setExpression(mascot, expr, duration = 900) {
-        const el = mascotEls[mascot];
-        if (!el) return;
-        // clear all expr classes
-        el.classList.remove("expr-neutral","expr-smile","expr-surprised","expr-tongue","expr-ngantuk","expr-kaget-super","expr-speak");
-        el.classList.add("expr-" + expr);
-
-        // frames: toggle .frame.active for specific frames (neutral/surprised/sleepy)
-        const frames = el.querySelectorAll(".frame");
-        frames.forEach(f => f.classList.remove("active"));
-        const activeFrames = el.querySelectorAll(".frame." + (expr === "kaget-super" ? "surprised" : expr));
-        if (activeFrames.length) {
-            activeFrames.forEach(f => f.classList.add("active"));
-        } else {
-            const neutralFrames = el.querySelectorAll(".frame.neutral");
-            neutralFrames.forEach(f => f.classList.add("active"));
-        }
-
-        el.classList.remove("animate");
-        void el.offsetWidth; // reflow to restart animation
-
-        if (expr === "surprised" || expr === "kaget-super") {
-            el.classList.add("animate");
-            const paw = el.querySelector(".wave");
-            if (paw) { paw.classList.remove("animate-hand"); void paw.offsetWidth; paw.classList.add("animate-hand"); }
-        } else if (expr === "smile" || expr === "tongue") {
-            el.classList.add("animate");
-            const paw = el.querySelector(".wave");
-            if (paw && Math.random() > 0.4) { paw.classList.remove("animate-hand"); void paw.offsetWidth; paw.classList.add("animate-hand"); }
-        } else if (expr === "ngantuk") {
-            // sleepy subtle motion
-            // no extra animate class besides idle
-        }
-
-        if (duration > 0) {
-            setTimeout(() => {
-                el.classList.remove("animate");
-                // revert to neutral (keep speak off)
-                el.classList.remove("expr-smile","expr-surprised","expr-tongue","expr-ngantuk","expr-kaget-super","expr-speak");
-                el.classList.add("expr-neutral");
-                const frames2 = el.querySelectorAll(".frame");
-                frames2.forEach(f => f.classList.remove("active"));
-                const neutralFrames = el.querySelectorAll(".frame.neutral");
-                neutralFrames.forEach(f => f.classList.add("active"));
-            }, duration + 80);
-        }
-    }
-
-    // --- lip-sync (bibir bergerak) for longer answers ---
-    function lipSyncForText(text) {
-        const el = mascotEls[mascotType];
-        if (!el) return;
-        const duration = Math.min(3500, Math.max(600, text.length * 55)); // ms
-        const interval = 100; // toggle every 100ms
-        let on = false;
-        // ensure animate for nicer motion
-        el.classList.add("animate");
-        const id = setInterval(() => {
-            if (on) {
-                el.classList.remove("expr-speak");
-            } else {
-                el.classList.add("expr-speak");
-            }
-            on = !on;
-        }, interval);
-        setTimeout(() => {
-            clearInterval(id);
-            el.classList.remove("expr-speak");
-            el.classList.remove("animate");
-        }, duration);
-    }
-
-    // map expression to default emoji reaction
-    function expressionToEmoji(expr) {
-        switch(expr) {
-            case "smile": return "💗";
-            case "surprised": return "😮";
-            case "tongue": return "😂";
-            case "ngantuk": return "😴";
-            case "kaget-super": return "😲";
-            default: return "👍";
-        }
-    }
-
-    // --- core behavior ---
-    function tanya() {
-        const pick = pertanyaan[Math.floor(Math.random() * pertanyaan.length)];
-        animateBox(pick.text);
-        document.getElementById("jawaban").value = "";
-        hasilEl.innerHTML = "";
-
-        // choose expression by type with small randomness for kaget/ngantuk
-        let expr = "neutral";
-        if (pick.type === "soft") expr = "smile";
-        else if (pick.type === "funny") expr = "surprised";
-        // random chances for special expressions
-        if (Math.random() < 0.06) expr = "kaget-super";
-        else if (Math.random() < 0.08) expr = "ngantuk";
-        if (pick.type === "funny" && Math.random() < 0.12) expr = "tongue";
-
-        setExpression(mascotType, expr, 1200);
-        playMascotSound(mascotType, "pop");
-
-        if (confettiEnabled && pick.type === "soft" && Math.random() < 0.12) launchConfetti(14);
-    }
-
-    function animateBox(text) {
-        boxEl.classList.remove("pop");
-        setTimeout(() => {
-            boxEl.innerText = text;
-            boxEl.classList.add("pop", "glow");
-            setTimeout(()=> boxEl.classList.remove("glow"), 420);
-        }, 12);
-    }
-
-    function kirim() {
-        const isi = document.getElementById("jawaban").value.trim();
-        if (isi === "") {
-            hasilEl.innerHTML = "Kamu belum jawab apa-apa, Mila 😆";
-            if (soundEnabled) playPop();
-            setExpression(mascotType, "neutral", 700);
-        } else {
-            hasilEl.innerHTML = "Jawaban Mila: <br><b>“" + escapeHtml(isi) + "”</b> 💗";
-            if (soundEnabled) playSuccess();
-            setExpression(mascotType, "smile", 1000);
-            if (confettiEnabled) launchConfetti(20);
-            // lip-sync a bit for the shown answer
-            lipSyncForText(isi);
-        }
-    }
-
-    // Add question currently shown to lembar (no answer yet)
-    function tambahKeLembar() {
-        const q = boxEl.innerText.trim();
-        if (!q || q.toLowerCase().includes("klik tombol")) {
-            alert("Belum ada pertanyaan yang aktif. Klik 'Tanyain Aku' dulu ya.");
-            return;
-        }
-        lembar.push({ question: q, answer: "", savedAt: new Date().toISOString(), reaction: "👍" });
-        saveLembar();
-        renderLembar();
-        if (soundEnabled) playSaveSound();
-        launchConfetti();
-        setExpression(mascotType, "smile", 900);
-        setTimeout(() => {
-            const last = document.querySelector("#lembarList .qa:last-child textarea");
-            if (last) last.focus();
-        }, 60);
-    }
-
-    // Save current top input + auto-reaction/timestamp
-    function simpanJawabanSekarang() {
-        const q = boxEl.innerText.trim();
-        const isi = document.getElementById("jawaban").value.trim();
-        if (!q || q.toLowerCase().includes("klik tombol")) {
-            alert("Belum ada pertanyaan aktif untuk disimpan.");
-            return;
-        }
-        if (!isi) {
-            alert("Jawaban kosong. Tulis jawaban di kotak dulu.");
-            return;
-        }
-        // guess expression used currently to derive reaction
-        // we'll pick a reaction based on current mascot's expression if possible
-        const el = mascotEls[mascotType];
-        let expr = "neutral";
-        if (el) {
-            const classList = el.classList;
-            if (classList.contains("expr-smile")) expr = "smile";
-            else if (classList.contains("expr-surprised")) expr = "surprised";
-            else if (classList.contains("expr-tongue")) expr = "tongue";
-            else if (classList.contains("expr-ngantuk")) expr = "ngantuk";
-            else if (classList.contains("expr-kaget-super")) expr = "kaget-super";
-        }
-        const reaction = expressionToEmoji(expr);
-        const now = new Date().toISOString();
-        lembar.push({ question: q, answer: isi, savedAt: now, reaction });
-        saveLembar();
-        renderLembar();
-        document.getElementById("jawaban").value = "";
-        document.getElementById("hasil").innerHTML = "Jawaban disimpan ke lembar ✓";
-        if (soundEnabled) playSaveSound();
-        launchConfetti(36);
-        setExpression(mascotType, "smile", 1100);
-        lipSyncForText(isi);
-    }
-
-    function renderLembar() {
-        const container = document.getElementById("lembarList");
-        container.innerHTML = "";
-        if (!lembar.length) {
-            container.innerHTML = "<div class='muted'>Lembar kosong. Tambahkan pertanyaan dari kotak kiri.</div>";
-            return;
-        }
-
-        lembar.forEach((item, idx) => {
-            const div = document.createElement("div");
-            div.className = "qa";
-
-            const q = document.createElement("div");
-            q.className = "question";
-            q.innerText = (idx + 1) + ". " + item.question;
-
-            const ta = document.createElement("textarea");
-            ta.value = item.answer || "";
-            ta.placeholder = "Tulis jawabanmu di sini...";
-            ta.oninput = (e) => {
-                // edits are local; explicit "Simpan" updates timestamp & play lip sync
-                lembar[idx].answer = e.target.value;
-            };
-
-            const row = document.createElement("div");
-            row.className = "row";
-
-            const left = document.createElement("div");
-            left.style.display = "flex";
-            left.style.flexDirection = "column";
-            left.style.gap = "6px";
-
-            // meta: reaction + timestamp
-            const meta = document.createElement("div");
-            meta.className = "meta";
-
-            const reactionDisplay = document.createElement("div");
-            reactionDisplay.className = "reaction";
-            reactionDisplay.innerText = item.reaction || "👍";
-
-            const timestamp = document.createElement("div");
-            timestamp.className = "timestamp";
-            timestamp.innerText = item.savedAt ? formatTime(item.savedAt) : "";
-
-            meta.appendChild(reactionDisplay);
-            meta.appendChild(timestamp);
-
-            left.appendChild(meta);
-
-            // reaction picker
-            const reactionsSet = document.createElement("div");
-            reactionsSet.className = "reactions-set";
-            const reactions = ["💗","😂","😮","😴","👍","😲","❣️"];
-            reactions.forEach(r => {
-                const rb = document.createElement("button");
-                rb.type = "button";
-                rb.innerText = r;
-                rb.title = "Set reaksi " + r;
-                rb.onclick = () => {
-                    lembar[idx].reaction = r;
-                    saveLembar();
-                    renderLembar();
-                };
-                reactionsSet.appendChild(rb);
-            });
-            left.appendChild(reactionsSet);
-
-            // right buttons: save & delete
-            const btns = document.createElement("div");
-            btns.style.display = "flex";
-            btns.style.flexDirection = "column";
-            btns.style.gap = "8px";
-            btns.style.alignItems = "flex-end";
-
-            const simpan = document.createElement("button");
-            simpan.className = "small";
-            simpan.innerText = "Simpan";
-            simpan.onclick = () => {
-                lembar[idx].savedAt = new Date().toISOString();
-                // ensure answer is up-to-date (already taken from ta oninput)
-                // play sound + lip sync for this saved text
-                saveLembar();
-                renderLembar();
-                if (soundEnabled) playSaveSound();
-                lipSyncForText(lembar[idx].answer || "");
-                setExpression(mascotType, "smile", 900);
-            };
-
-            const hapus = document.createElement("button");
-            hapus.className = "small";
-            hapus.innerText = "Hapus";
-            hapus.onclick = () => {
-                if (confirm("Hapus pertanyaan ini dari lembar?")) {
-                    lembar.splice(idx, 1);
-                    saveLembar();
-                    renderLembar();
-                    if (soundEnabled) playPop();
-                    setExpression(mascotType, "neutral", 700);
-                }
-            };
-
-            btns.appendChild(simpan);
-            btns.appendChild(hapus);
-
-            row.appendChild(left);
-            row.appendChild(btns);
-
-            div.appendChild(q);
-            div.appendChild(ta);
-            div.appendChild(row);
-
-            container.appendChild(div);
-        });
-    }
-
-    function saveLembar() {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(lembar));
-        } catch (e) {
-            console.warn("Gagal menyimpan lembar:", e);
-        }
-    }
-
-    function loadLembar() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) return [];
-            const parsed = JSON.parse(raw);
-            // backwards compatibility: ensure required fields exist
-            return parsed.map(item => ({
-                question: item.question || "",
-                answer: item.answer || "",
-                savedAt: item.savedAt || (item.answer ? new Date().toISOString() : ""),
-                reaction: item.reaction || "👍"
-            }));
-        } catch (e) {
-            console.warn("Gagal memuat lembar:", e);
-            return [];
-        }
-    }
-
-    function bersihkanLembar() {
-        if (!lembar.length) return;
-        if (confirm("Yakin ingin mengosongkan seluruh lembar?")) {
-            lembar = [];
-            saveLembar();
-            renderLembar();
-            if (soundEnabled) playPop();
-            setExpression(mascotType, "neutral", 700);
-        }
-    }
-
-    function cetakLembar() {
-        if (!lembar.length) {
-            alert("Lembar kosong. Tambahkan pertanyaan dulu.");
-            return;
-        }
-        const sheetEl = document.querySelector(".sheet");
-        sheetEl.classList.add("printable");
-        if (soundEnabled) playPop();
-        window.print();
-        sheetEl.classList.remove("printable");
-    }
-
-    // small export/import JSON helpers
-    function downloadJson() {
-        if (!lembar.length) {
-            alert("Lembar kosong.");
-            return;
-        }
-        const data = JSON.stringify(lembar, null, 2);
-        const blob = new Blob([data], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "lembar_mila.json";
-        a.click();
-        URL.revokeObjectURL(url);
-        if (soundEnabled) playSaveSound();
-    }
-
-    function importJson() {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "application/json";
-        input.onchange = (e) => {
-            const f = e.target.files[0];
-            if (!f) return;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                try {
-                    const parsed = JSON.parse(ev.target.result);
-                    if (!Array.isArray(parsed)) throw new Error("Format tidak valid");
-                    if (confirm("Gabungkan isi file ke lembar saat ini? (Cancel = ganti seluruh lembar)")) {
-                        lembar = lembar.concat(parsed);
-                    } else {
-                        lembar = parsed;
-                    }
-                    saveLembar();
-                    renderLembar();
-                    if (soundEnabled) playSuccess();
-                } catch (err) {
-                    alert("Gagal mengimpor: " + err.message);
-                }
-            };
-            reader.readAsText(f);
-        };
-        input.click();
-    }
-
-    function escapeHtml(unsafe) {
-        return unsafe
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-    }
-
-    function formatTime(iso) {
-        try {
-            const d = new Date(iso);
-            return d.toLocaleString();
-        } catch (e) {
-            return iso;
-        }
-    }
-
-    // init
-    renderLembar();
-    setMascot(mascotType, true);
-
-    // warm up audio on first user gesture (some browsers require)
-    document.addEventListener("click", function initAudioOnce() {
-        if (!audioCtx && soundEnabled) {
-            try {
-                ensureAudioContext();
-                // play tiny silent sound to unlock on mobile
-                if (audioCtx) {
-                    const s = audioCtx.createBufferSource();
-                    s.buffer = audioCtx.createBuffer(1,1,audioCtx.sampleRate);
-                    s.connect(audioCtx.destination);
-                    if (s.start) s.start(0);
-                }
-            } catch (e) { /* ignore */ }
-        }
-        document.removeEventListener("click", initAudioOnce);
-    });
-
-    // expose some methods for debugging in console if needed
-    window._mila = {
-        launchConfetti, playPop, playSaveSound, playSuccess, setMascot, setExpression, lipSyncForText
-    };
+render();
 </script>
 
 </body>
