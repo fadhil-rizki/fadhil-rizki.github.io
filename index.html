@@ -2,153 +2,94 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Mila Mood Tracker</title>
+<title>Mila Compliment Generator</title>
 <style>
     body {
         background: #fff7fd;
         font-family: "Poppins", sans-serif;
-        margin: 0;
-        padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        text-align: center;
+        margin: 0;
     }
 
     .card {
         background: white;
-        width: 360px;
+        width: 350px;
         padding: 25px;
         border-radius: 18px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        text-align: center;
     }
 
     h2 {
-        margin-bottom: 10px;
+        margin: 0;
+        margin-bottom: 15px;
         color: #d55da8;
     }
 
-    .moods {
-        margin-top: 15px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .mood {
-        padding: 10px 14px;
-        border-radius: 12px;
-        background: #f7f7f7;
-        cursor: pointer;
-        border: 1px solid #eee;
-        transition: .2s;
-        font-size: 15px;
-    }
-
-    .mood:hover {
-        transform: scale(1.05);
-        background: #ffe5f4;
-        border-color: #ffb3da;
+    #text {
+        font-size: 16px;
+        color: #555;
+        min-height: 50px;
+        opacity: 0;
+        transition: opacity .35s ease;
     }
 
     button {
-        margin-top: 15px;
-        padding: 10px 16px;
+        margin-top: 20px;
+        padding: 12px 20px;
         background: #ff6fb3;
         color: white;
         border: none;
         border-radius: 12px;
         cursor: pointer;
         font-weight: 600;
-        transition: 0.2s;
+        transition: .2s;
     }
 
     button:hover {
         background: #ff4fab;
         transform: scale(1.03);
     }
-
-    #last, #history {
-        margin-top: 12px;
-        font-size: 14px;
-        color: #555;
-    }
-
 </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Mila’s Mood Tracker 💗</h2>
-    <div>Pilih mood kamu hari ini ya, Mila.</div>
+    <h2>Compliment Buat Mila 💗</h2>
 
-    <div class="moods">
-        <div class="mood" onclick="pilih('Happy')">😊 Happy</div>
-        <div class="mood" onclick="pilih('Calm')">😌 Calm</div>
-        <div class="mood" onclick="pilih('Tired')">😴 Tired</div>
-        <div class="mood" onclick="pilih('Meh')">😐 Meh</div>
-    </div>
+    <div id="text">Klik tombolnya ya, Mila.</div>
 
-    <button onclick="simpan()">Simpan Mood</button>
-    <button style="background:#ccc; color:#333;" onclick="hapus()">Hapus History</button>
-
-    <div id="last">Mood terakhir: —</div>
-    <div id="history">Belum ada history.</div>
+    <button onclick="newCompliment()">Dapatkan Compliment 💬</button>
 </div>
 
 <script>
-let moodDipilih = null;
+const compliments = [
+    "Kamu tuh punya vibe yang bikin orang nyaman.",
+    "Cara kamu merespon hal-hal kecil itu lucu dan menarik.",
+    "Senyummu itu loh… bisa ngeringin hari.",
+    "Kamu terlihat lebih keren dari yang kamu kira.",
+    "Ada hal calm dari kamu yang enak dilihat.",
+    "Kamu itu tipikal orang yang bikin suasana jadi lebih adem.",
+    "Entah kenapa, aura kamu tuh positif banget.",
+    "Gaya kamu simpel tapi ada ‘something’-nya.",
+    "Kamu punya energi lembut yang jarang dimiliki orang.",
+    "Mila itu… effortlessly charming."
+];
 
-function pilih(mood) {
-    moodDipilih = mood;
-    document.getElementById("last").innerHTML = "Mood dipilih: <b>" + mood + "</b>";
+function newCompliment() {
+    let el = document.getElementById("text");
+
+    el.style.opacity = 0;
+
+    setTimeout(() => {
+        let c = compliments[Math.floor(Math.random() * compliments.length)];
+        el.innerHTML = c;
+        el.style.opacity = 1;
+    }, 200);
 }
-
-function simpan() {
-    if (!moodDipilih) {
-        alert("Pilih mood dulu ya, Mila 💗");
-        return;
-    }
-
-    let data = JSON.parse(localStorage.getItem("moodMila") || "[]");
-
-    data.unshift({
-        mood: moodDipilih,
-        waktu: new Date().toLocaleString()
-    });
-
-    localStorage.setItem("moodMila", JSON.stringify(data));
-
-    render();
-}
-
-function hapus() {
-    localStorage.removeItem("moodMila");
-    render();
-}
-
-function render() {
-    let data = JSON.parse(localStorage.getItem("moodMila") || "[]");
-
-    if (data.length === 0) {
-        document.getElementById("last").innerHTML = "Mood terakhir: —";
-        document.getElementById("history").innerHTML = "Belum ada history.";
-        return;
-    }
-
-    document.getElementById("last").innerHTML =
-        "Mood terakhir: <b>" + data[0].mood + "</b> (" + data[0].waktu + ")";
-
-    let list = data
-        .map(i => "• " + i.mood + " — <i>" + i.waktu + "</i>")
-        .join("<br>");
-
-    document.getElementById("history").innerHTML = list;
-}
-
-render();
 </script>
 
 </body>
