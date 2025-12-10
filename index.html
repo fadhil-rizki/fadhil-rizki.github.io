@@ -2,125 +2,103 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Untuk Mila</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<title>Pertanyaan Buat Mila</title>
 <style>
     body {
+        background: #fff7fd;
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
         margin: 0;
-        padding: 0;
-        background: #fff6fb;
-        font-family: "Inter", sans-serif;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #d55da8;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    #box {
+        background: white;
+        padding: 20px 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        width: 320px;
+        min-height: 80px;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100vh;
-    }
-
-    .card {
-        background: white;
-        width: 90%;
-        max-width: 450px;
-        padding: 28px;
-        border-radius: 18px;
-        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-        text-align: center;
-        animation: fadeIn 1s ease forwards;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .title {
-        font-size: 19px;
-        color: #ff5ca3;
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-
-    .msg {
-        font-size: 15px;
-        color: #444;
-        min-height: 110px;
-        white-space: pre-line;
-        line-height: 1.5;
+        font-size: 17px;
+        color: #333;
+        transition: .2s;
     }
 
     button {
-        margin-top: 20px;
-        padding: 12px 18px;
-        background: #ff5ca3;
-        color: white;
+        margin-top: 25px;
+        padding: 12px 22px;
         border: none;
         border-radius: 10px;
+        background: #ff6fbe;
+        color: white;
+        font-size: 15px;
         cursor: pointer;
-        font-weight: 600;
-        font-size: 14px;
         transition: 0.2s;
+        font-weight: 600;
     }
 
     button:hover {
-        opacity: 0.9;
+        background: #ff4fab;
+        transform: scale(1.03);
     }
 
-    .breath {
-        margin-top: 18px;
-        font-size: 13px;
-        color: #777;
-        opacity: 0;
-        animation: breath 4s infinite;
-    }
-
-    @keyframes breath {
-        0% { opacity: 0.4; transform: scale(0.97); }
-        50% { opacity: 1; transform: scale(1); }
-        100% { opacity: 0.4; transform: scale(0.97); }
+    #nama {
+        color: #ff4fab;
+        font-weight: 700;
     }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <div class="title">Halo, Mila 🤍</div>
-    <div class="msg" id="output">Kalau kamu lagi pusing dikit, coba pencet tombol di bawah.</div>
-    <button onclick="showComfort()">Tap di sini</button>
-    <div class="breath">napas dulu… santai… hidup ini ga serumit tugas kuliah kok 😌</div>
-</div>
+<h2>Pertanyaan buat <span id="nama">Mila</span> 💗</h2>
+
+<div id="box">Klik tombol di bawah ya, Mila.</div>
+
+<button onclick="tanya()">Tanyain Aku 💬</button>
 
 <script>
-function typeText(text, element, speed = 20) {
-    let i = 0;
-    element.textContent = "";
-    let typer = setInterval(() => {
-        element.textContent += text.charAt(i);
-        i++;
-        if (i >= text.length) clearInterval(typer);
-    }, speed);
-}
+    const pertanyaan = [
+        // Cute tapi soft
+        "Mila, hari ini ada hal kecil yang bikin kamu seneng nggak?",
+        "Kalau sekarang boleh milih suasana, kamu prefer yang tenang atau rame?",
+        "Akhir-akhir ini kamu lagi kepengen makanan tertentu nggak?",
+        "Kalau lagi capek biasanya kamu ngapain biar enakan?",
+        "Hal paling nyaman buat kamu itu apa sih, Mila?",
+        "Ada lagu yang sering kamu puter akhir-akhir ini?",
+        "Kalau kamu dikasih 1 hari buat istirahat full, kamu mau ngapain?",
+        "Mila tipe yang gampang kebawa suasana atau tetep chill?",
 
-function showComfort() {
-    const msg = 
-`Mila,
-kalau kamu lagi capek,
-ingat satu hal ya…
+        // Random lucu receh
+        "Menurutmu kenapa sendal jepit selalu hilang sebelah duluan?",
+        "Kalau kucing bisa ngomong, suaranya bakal cempreng atau berat?",
+        "Kenapa ya pas lapar semua makanan keliatan enak?",
+        "Menurutmu mie instan paling enak dimakan jam berapa?",
+        "Kalau otak lagi error, biasanya errornya di bagian mana?",
+        "Kamu tim mandi dulu atau rebahan dulu pas sampai rumah?",
+        "Kalau kamu punya superpower random, kamu mau bisa apa?",
+        "Menurutmu kenapa bantal favorit selalu menang dari bantal lain?"
+    ];
 
-istirahat itu nggak dosa kok 😌
-
-Dan kalau kamu tiba-tiba mikir:
-"duh hidupku ribet banget…"
-
-Tenang…
-hidup emang ribet,
-tapi kamu lucu… jadi seimbang 😭✨
-
-Pokoknya pelan-pelan wae,
-kamu itu lebih kuat dari yang kamu kira.`;
-
-    typeText(msg, document.getElementById("output"));
-}
+    function tanya() {
+        let box = document.getElementById("box");
+        let random = pertanyaan[Math.floor(Math.random() * pertanyaan.length)];
+        box.innerHTML = random;
+    }
 </script>
 
 </body>
