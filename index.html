@@ -1,126 +1,127 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ucapan Ulang Tahun</title>
+<meta charset="UTF-8">
+<title>Untuk Mila</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
-  body{
-    font-family: Arial, sans-serif;
-    background: #f5f2ff;
-    margin:0;
-    padding:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-  }
-  .card{
-    background:#fff;
-    padding:20px;
-    border-radius:16px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.1);
-    width:100%;
-    max-width:600px;
-  }
-  h2{
-    color:#6a4cff;
-    margin:0;
-  }
-  label{
-    font-size:14px;
-    display:block;
-    margin-top:15px;
-  }
-  input, textarea{
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    border-radius:10px;
-    border:1px solid #ddd;
-    font-size:14px;
-  }
-  textarea{ min-height:120px; }
-  button{
-    background:#6a4cff;
-    color:#fff;
-    border:none;
-    padding:10px 16px;
-    margin-top:15px;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:15px;
-  }
-  #output{
-    margin-top:20px;
-    white-space:pre-wrap;
-    background:#faf7ff;
-    padding:20px;
-    border-radius:12px;
-    min-height:120px;
-    font-size:15px;
-    border:1px solid #eee;
-  }
+    body {
+        margin: 0;
+        padding: 0;
+        background: #fff6fb;
+        font-family: "Inter", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .card {
+        background: white;
+        width: 90%;
+        max-width: 450px;
+        padding: 28px;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        text-align: center;
+        animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+        font-size: 19px;
+        color: #ff5ca3;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .msg {
+        font-size: 15px;
+        color: #444;
+        min-height: 110px;
+        white-space: pre-line;
+        line-height: 1.5;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 12px 18px;
+        background: #ff5ca3;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    .breath {
+        margin-top: 18px;
+        font-size: 13px;
+        color: #777;
+        opacity: 0;
+        animation: breath 4s infinite;
+    }
+
+    @keyframes breath {
+        0% { opacity: 0.4; transform: scale(0.97); }
+        50% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0.4; transform: scale(0.97); }
+    }
 </style>
 </head>
+
 <body>
+
 <div class="card">
-  <h2>Ucapan Ulang Tahun 🎉</h2>
-
-  <label>Nama</label>
-  <input id="name" value="Sarah" />
-
-  <label>Kata Pembuka</label>
-  <input id="greet" value="Barakallah fii umrik," />
-
-  <label>Isi Pesan</label>
-  <textarea id="msg">Di hari spesial ini, aku cuma pengen kamu tahu satu hal:
-kamu berhak dapat hal-hal baik dalam hidupmu.
-
-Semoga Allah selalu jagain kamu,
-ngasih ketenangan di hati, dan melancarkan semua urusanmu.
-
-Kalau lagi capek, semoga diberi kekuatan.
-Kalau lagi bingung, semoga diberi jalan.
-Kalau lagi sedih, semoga cepat diganti sama kebahagiaan.
-
-Selamat ulang tahun ya, Sarah.
-Semoga tahun ini jadi tahun yang lebih lembut buat kamu.
-
-Thank you.</textarea>
-
-  <button onclick="playMsg()">Play</button>
-
-  <div id="output"></div>
+    <div class="title">Halo, Mila 🤍</div>
+    <div class="msg" id="output">Kalau kamu lagi pusing dikit, coba pencet tombol di bawah.</div>
+    <button onclick="showComfort()">Tap di sini</button>
+    <div class="breath">napas dulu… santai… hidup ini ga serumit tugas kuliah kok 😌</div>
 </div>
 
 <script>
-function typeWriter(full, element, speed = 25){
-  element.textContent = "";
-  let i = 0;
-  return new Promise(resolve => {
-    let interval = setInterval(() => {
-      element.textContent += full.charAt(i);
-      i++;
-      if(i >= full.length){
-        clearInterval(interval);
-        resolve();
-      }
+function typeText(text, element, speed = 20) {
+    let i = 0;
+    element.textContent = "";
+    let typer = setInterval(() => {
+        element.textContent += text.charAt(i);
+        i++;
+        if (i >= text.length) clearInterval(typer);
     }, speed);
-  });
 }
 
-async function playMsg(){
-  const name = document.getElementById("name").value.trim();
-  const greet = document.getElementById("greet").value.trim();
-  const body = document.getElementById("msg").value;
+function showComfort() {
+    const msg = 
+`Mila,
+kalau kamu lagi capek,
+ingat satu hal ya…
 
-  const out = document.getElementById("output");
+istirahat itu nggak dosa kok 😌
 
-  const finalText = `🎉 ${greet} ${name}\n\n${body}`;
+Dan kalau kamu tiba-tiba mikir:
+"duh hidupku ribet banget…"
 
-  await typeWriter(finalText, out, 18);
+Tenang…
+hidup emang ribet,
+tapi kamu lucu… jadi seimbang 😭✨
+
+Pokoknya pelan-pelan wae,
+kamu itu lebih kuat dari yang kamu kira.`;
+
+    typeText(msg, document.getElementById("output"));
 }
 </script>
+
 </body>
 </html>
