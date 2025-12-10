@@ -19,7 +19,7 @@
 
     h2 {
         color: #d55da8;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         font-weight: 600;
     }
 
@@ -35,11 +35,11 @@
         justify-content: center;
         font-size: 17px;
         color: #333;
+        margin-bottom: 15px;
         transition: .2s;
     }
 
     button {
-        margin-top: 25px;
         padding: 12px 22px;
         border: none;
         border-radius: 10px;
@@ -49,11 +49,29 @@
         cursor: pointer;
         transition: 0.2s;
         font-weight: 600;
+        margin: 5px;
     }
 
     button:hover {
         background: #ff4fab;
         transform: scale(1.03);
+    }
+
+    #jawaban {
+        margin-top: 10px;
+        width: 300px;
+        padding: 10px;
+        border: 2px solid #ff99cf;
+        border-radius: 10px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    #hasil {
+        margin-top: 15px;
+        font-size: 16px;
+        color: #444;
+        min-height: 40px;
     }
 
     #nama {
@@ -71,19 +89,25 @@
 
 <button onclick="tanya()">Tanyain Aku 💬</button>
 
+<input type="text" id="jawaban" placeholder="Tulis jawaban Mila di sini...">
+
+<button onclick="kirim()">Kirim Jawaban</button>
+
+<div id="hasil"></div>
+
 <script>
     const pertanyaan = [
-        // Cute tapi soft
+        // Cute soft
         "Mila, hari ini ada hal kecil yang bikin kamu seneng nggak?",
         "Kalau sekarang boleh milih suasana, kamu prefer yang tenang atau rame?",
         "Akhir-akhir ini kamu lagi kepengen makanan tertentu nggak?",
         "Kalau lagi capek biasanya kamu ngapain biar enakan?",
         "Hal paling nyaman buat kamu itu apa sih, Mila?",
-        "Ada lagu yang sering kamu puter akhir-akhir ini?",
+        "Ada lagu yang lagi sering kamu puter akhir-akhir ini?",
         "Kalau kamu dikasih 1 hari buat istirahat full, kamu mau ngapain?",
         "Mila tipe yang gampang kebawa suasana atau tetep chill?",
 
-        // Random lucu receh
+        // Lucu random
         "Menurutmu kenapa sendal jepit selalu hilang sebelah duluan?",
         "Kalau kucing bisa ngomong, suaranya bakal cempreng atau berat?",
         "Kenapa ya pas lapar semua makanan keliatan enak?",
@@ -98,6 +122,20 @@
         let box = document.getElementById("box");
         let random = pertanyaan[Math.floor(Math.random() * pertanyaan.length)];
         box.innerHTML = random;
+
+        document.getElementById("jawaban").value = "";
+        document.getElementById("hasil").innerHTML = "";
+    }
+
+    function kirim() {
+        let isi = document.getElementById("jawaban").value.trim();
+        let hasil = document.getElementById("hasil");
+
+        if (isi === "") {
+            hasil.innerHTML = "Kamu belum jawab apa-apa, Mila 😆";
+        } else {
+            hasil.innerHTML = "Jawaban Mila: <br><b>“" + isi + "”</b> 💗";
+        }
     }
 </script>
 
