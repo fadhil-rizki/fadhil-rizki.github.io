@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Pertanyaan Buat Mila</title>
+<title>Pertanyaan Buat Sarah</title>
 <style>
     body {
         background: #fff7fd;
@@ -78,34 +78,55 @@
         color: #ff4fab;
         font-weight: 700;
     }
+
+    .small {
+        font-size: 13px;
+        color: #777;
+        margin-top: 8px;
+    }
 </style>
 </head>
 
 <body>
 
-<h2>Pertanyaan buat <span id="nama">Mila</span> 💗</h2>
+<h2>Pertanyaan buat <span id="nama">Sarah</span> 💗</h2>
 
-<div id="box">Klik tombol di bawah ya, Mila.</div>
+<div id="box">Klik tombol di bawah ya, Sarah.</div>
 
 <button onclick="tanya()">Tanyain Aku 💬</button>
 
-<input type="text" id="jawaban" placeholder="Tulis jawaban Mila di sini...">
+<input type="text" id="jawaban" placeholder="Tulis jawaban Sarah di sini...">
 
 <button onclick="kirim()">Kirim Jawaban</button>
 
 <div id="hasil"></div>
+<div class="small" id="hint"></div>
 
 <script>
+    // -----------------------
+    // CONFIGURASI (ganti sesuai kebutuhan)
+    // MODE:
+    // - "mailto" => buka aplikasi email di device Sarah, pra-isi email ke OWNER_EMAIL
+    // - "formspree" => kirim POST ke Formspree endpoint (otomatis)
+    // - "google" => kirim POST ke Google Apps Script Web App (otomatis)
+    //
+    // Untuk jawaban otomatis tanpa interaksi dari Sarah pilih "formspree" atau "google"
+    // -----------------------
+    const MODE = "google"; // "mailto" | "formspree" | "google"
+    const OWNER_EMAIL = "owner@example.com"; // hanya untuk mailto
+    const FORM_ENDPOINT = "https://formspree.io/f/your-form-id"; // ganti jika pakai formspree
+    const GOOGLE_ENDPOINT = "https://script.google.com/macros/s/DEPLOY_ID/exec"; // ganti jika pakai Google Apps Script
+
     const pertanyaan = [
         // Cute soft
-        "Mila, hari ini ada hal kecil yang bikin kamu seneng nggak?",
+        "Sarah, hari ini ada hal kecil yang bikin kamu seneng nggak?",
         "Kalau sekarang boleh milih suasana, kamu prefer yang tenang atau rame?",
         "Akhir-akhir ini kamu lagi kepengen makanan tertentu nggak?",
         "Kalau lagi capek biasanya kamu ngapain biar enakan?",
-        "Hal paling nyaman buat kamu itu apa sih, Mila?",
+        "Hal paling nyaman buat kamu itu apa sih, Sarah?",
         "Ada lagu yang lagi sering kamu puter akhir-akhir ini?",
         "Kalau kamu dikasih 1 hari buat istirahat full, kamu mau ngapain?",
-        "Mila tipe yang gampang kebawa suasana atau tetep chill?",
+        "Sarah tipe yang gampang kebawa suasana atau tetep chill?",
 
         // Lucu random
         "Menurutmu kenapa sendal jepit selalu hilang sebelah duluan?",
@@ -125,17 +146,125 @@
 
         document.getElementById("jawaban").value = "";
         document.getElementById("hasil").innerHTML = "";
+        updateHint();
     }
 
-    function kirim() {
+    function updateHint() {
+        const hintEl = document.getElementById("hint");
+        if (MODE === "mailto") {
+            hintEl.innerHTML = "Metode: mailto — setelah tombol diklik, aplikasi email di perangkat Sarah akan terbuka untuk mengirim jawaban ke email pemilik. Pastikan OWNER_EMAIL diganti di kode.";
+        } else if (MODE === "formspree") {
+            hintEl.innerHTML = "Metode: Formspree — jawaban akan dikirim ke endpoint Formspree/endpoint form yang sudah dikonfigurasi.";
+        } else if (MODE === "google") {
+            hintEl.innerHTML = "Metode: Google Apps Script — jawaban akan dikirim ke Web App Google (endpoint harus Anda deploy dan isi GOOGLE_ENDPOINT).";
+        } else {
+            hintEl.innerHTML = "";
+        }
+    }
+
+    updateHint();
+
+    async function kirim() {
         let isi = document.getElementById("jawaban").value.trim();
         let hasil = document.getElementById("hasil");
+        const question = document.getElementById("box").innerText || "";
+        const timestamp = new Date().toISOString();
 
         if (isi === "") {
-            hasil.innerHTML = "Kamu belum jawab apa-apa, Mila 😆";
-        } else {
-            hasil.innerHTML = "Jawaban Mila: <br><b>“" + isi + "”</b> 💗";
+            hasil.innerHTML = "Kamu belum jawab apa-apa, Sarah 😆";
+            return;
         }
+
+        // prepare payload
+        const payload = {
+            question: question,
+            answer: isi,
+            sent_at: timestamp,
+            from: "Sarah (via halaman)"
+        };
+
+        if (MODE === "mailto") {
+            if (!OWNER_EMAIL || OWNER_EMAIL === "owner@example.com") {
+                hasil.innerHTML = "ERROR: OWNER_EMAIL belum dikonfigurasi di file. Edit kode dan ganti OWNER_EMAIL dengan alamat email pemilik.";
+                return;
+            }
+            const subject = "Jawaban dari Sarah untuk pertanyaanmu";
+            const bodyLines = [
+                "Pertanyaan: " + question,
+                "Jawaban: " + isi,
+                "Waktu (ISO): " + timestamp,
+                "",
+                "(Dikirim dari halaman tanya-jawab)"
+            ];
+            const mailto = `mailto:${encodeURIComponent(OWNER_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+            // open mail client (Sarah harus klik Send di mail client)
+            window.location.href = mailto;
+            hasil.innerHTML = "Aplikasi email dibuka. Sarah perlu menekan tombol kirim di aplikasi email untuk mengirim jawaban. Jika tidak ada aplikasi email, pilih metode Formspree/Google.";
+            return;
+        }
+
+        if (MODE === "formspree") {
+            if (!FORM_ENDPOINT || FORM_ENDPOINT.includes("your-form-id")) {
+                hasil.innerHTML = "ERROR: FORM_ENDPOINT belum dikonfigurasi. Ganti FORM_ENDPOINT di kode dengan endpoint Formspree Anda.";
+                return;
+            }
+            try {
+                hasil.innerHTML = "Mengirim...";
+                const formData = new FormData();
+                formData.append("question", payload.question);
+                formData.append("answer", payload.answer);
+                formData.append("sent_at", payload.sent_at);
+                formData.append("via", "formspree");
+
+                const resp = await fetch(FORM_ENDPOINT, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (resp.ok) {
+                    hasil.innerHTML = "Jawaban berhasil dikirim — kamu (pemilik) akan menerima pemberitahuan sesuai pengaturan Formspree.";
+                    document.getElementById("jawaban").value = "";
+                } else {
+                    const text = await resp.text();
+                    hasil.innerHTML = "Gagal mengirim. Respon server: " + resp.status + " — " + text;
+                }
+            } catch (e) {
+                hasil.innerHTML = "Gagal mengirim (network error): " + e.message;
+            }
+            return;
+        }
+
+        if (MODE === "google") {
+            if (!GOOGLE_ENDPOINT || GOOGLE_ENDPOINT.includes("DEPLOY_ID")) {
+                hasil.innerHTML = "ERROR: GOOGLE_ENDPOINT belum dikonfigurasi. Ganti GOOGLE_ENDPOINT di kode dengan URL Web App Anda.";
+                return;
+            }
+            try {
+                hasil.innerHTML = "Mengirim...";
+                const resp = await fetch(GOOGLE_ENDPOINT, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (resp.ok) {
+                    hasil.innerHTML = "Jawaban berhasil dikirim ke endpoint Google Apps Script.";
+                    document.getElementById("jawaban").value = "";
+                } else {
+                    const text = await resp.text();
+                    hasil.innerHTML = "Gagal mengirim. Respon server: " + resp.status + " — " + text;
+                }
+            } catch (e) {
+                hasil.innerHTML = "Gagal mengirim (network error): " + e.message;
+            }
+            return;
+        }
+
+        hasil.innerHTML = "Metode pengiriman tidak dikenal. Periksa MODE di konfigurasi.";
     }
 </script>
 
