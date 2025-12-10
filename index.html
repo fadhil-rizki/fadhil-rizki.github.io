@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Mila Compliment Generator</title>
+<title>Mila Guessing Game</title>
 <style>
     body {
         background: #fff7fd;
@@ -12,34 +12,35 @@
         align-items: center;
         height: 100vh;
         margin: 0;
-    }
-
-    .card {
-        background: white;
-        width: 350px;
-        padding: 25px;
-        border-radius: 18px;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.08);
         text-align: center;
     }
 
-    h2 {
-        margin: 0;
-        margin-bottom: 15px;
-        color: #d55da8;
+    .card {
+        background: #ffffff;
+        width: 340px;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
-    #text {
+    h2 {
+        color: #d55da8;
+        margin-bottom: 10px;
+    }
+
+    input {
+        width: 120px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
         font-size: 16px;
-        color: #555;
-        min-height: 50px;
-        opacity: 0;
-        transition: opacity .35s ease;
+        margin-top: 10px;
+        text-align: center;
     }
 
     button {
-        margin-top: 20px;
-        padding: 12px 20px;
+        margin-top: 15px;
+        padding: 10px 16px;
         background: #ff6fb3;
         color: white;
         border: none;
@@ -53,42 +54,76 @@
         background: #ff4fab;
         transform: scale(1.03);
     }
+
+    #result {
+        margin-top: 12px;
+        font-size: 16px;
+        color: #444;
+        min-height: 40px;
+    }
+
+    /* efek shake */
+    .shake {
+        animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
 </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Compliment Buat Mila 💗</h2>
+    <h2>Guessing Game Mila 🎮</h2>
+    <div>Tebak angka 1—20 ya, Mila.<br>kamu punya 5 kesempatan 💗</div>
 
-    <div id="text">Klik tombolnya ya, Mila.</div>
+    <input id="input" type="number" placeholder="Angka..." />
+    <br>
+    <button onclick="tebak()">Tebak</button>
+    <button style="background:#ccc;color:#333;" onclick="resetGame()">Ulang</button>
 
-    <button onclick="newCompliment()">Dapatkan Compliment 💬</button>
+    <div id="result"></div>
 </div>
 
 <script>
-const compliments = [
-    "Kamu tuh punya vibe yang bikin orang nyaman.",
-    "Cara kamu merespon hal-hal kecil itu lucu dan menarik.",
-    "Senyummu itu loh… bisa ngeringin hari.",
-    "Kamu terlihat lebih keren dari yang kamu kira.",
-    "Ada hal calm dari kamu yang enak dilihat.",
-    "Kamu itu tipikal orang yang bikin suasana jadi lebih adem.",
-    "Entah kenapa, aura kamu tuh positif banget.",
-    "Gaya kamu simpel tapi ada ‘something’-nya.",
-    "Kamu punya energi lembut yang jarang dimiliki orang.",
-    "Mila itu… effortlessly charming."
-];
+let target = Math.floor(Math.random() * 20) + 1;
+let kesempatan = 5;
 
-function newCompliment() {
-    let el = document.getElementById("text");
+function tebak() {
+    let box = document.getElementById("input");
+    let res = document.getElementById("result");
+    let nilai = parseInt(box.value);
 
-    el.style.opacity = 0;
+    if (isNaN(nilai) || nilai < 1 || nilai > 20) {
+        res.innerHTML = "Isi angka 1—20 ya, Mila 😆";
+        return;
+    }
 
-    setTimeout(() => {
-        let c = compliments[Math.floor(Math.random() * compliments.length)];
-        el.innerHTML = c;
-        el.style.opacity = 1;
-    }, 200);
+    kesempatan--;
+
+    if (nilai === target) {
+        res.innerHTML = "🎉 Yeay! Mila benar!";
+    } else if (kesempatan <= 0) {
+        res.innerHTML = "Kesempatan habis 😭<br>Jawabannya: " + target;
+    } else {
+        res.innerHTML = nilai < target
+            ? "Masih terlalu kecil, Mila.<br>Sisa: " + kesempatan
+            : "Terlalu besar, Mila.<br>Sisa: " + kesempatan;
+        box.classList.add("shake");
+        setTimeout(() => box.classList.remove("shake"), 300);
+    }
+}
+
+function resetGame() {
+    target = Math.floor(Math.random() * 20) + 1;
+    kesempatan = 5;
+    document.getElementById("result").innerHTML = "Game di-reset. Coba lagi ya!";
+    document.getElementById("input").value = "";
 }
 </script>
 
