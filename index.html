@@ -1,130 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Mila Guessing Game</title>
-<style>
-    body {
-        background: #fff7fd;
-        font-family: "Poppins", sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        text-align: center;
-    }
+    <meta charset="UTF-8">
+    <title>Untuk Mila</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-    .card {
-        background: #ffffff;
-        width: 340px;
-        padding: 25px;
-        border-radius: 18px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    }
+        .card {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
 
-    h2 {
-        color: #d55da8;
-        margin-bottom: 10px;
-    }
+        h2 {
+            margin-bottom: 20px;
+        }
 
-    input {
-        width: 120px;
-        padding: 10px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        font-size: 16px;
-        margin-top: 10px;
-        text-align: center;
-    }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4c6ef5;
+            color: white;
+            cursor: pointer;
+        }
 
-    button {
-        margin-top: 15px;
-        padding: 10px 16px;
-        background: #ff6fb3;
-        color: white;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: .2s;
-    }
+        button:hover {
+            background-color: #364fc7;
+        }
 
-    button:hover {
-        background: #ff4fab;
-        transform: scale(1.03);
-    }
-
-    #result {
-        margin-top: 12px;
-        font-size: 16px;
-        color: #444;
-        min-height: 40px;
-    }
-
-    /* efek shake */
-    .shake {
-        animation: shake 0.3s;
-    }
-
-    @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        50% { transform: translateX(5px); }
-        75% { transform: translateX(-5px); }
-        100% { transform: translateX(0); }
-    }
-</style>
+        .message {
+            margin-top: 25px;
+            text-align: left;
+            white-space: pre-line;
+            line-height: 1.6;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Guessing Game Mila 🎮</h2>
-    <div>Tebak angka 1—20 ya, Mila.<br>kamu punya 5 kesempatan 💗</div>
+    <h2>Hai Mila</h2>
+    <p>Aku bikin sesuatu kecil buat kamu</p>
+    <button onclick="showMessage()">Klik di sini</button>
 
-    <input id="input" type="number" placeholder="Angka..." />
-    <br>
-    <button onclick="tebak()">Tebak</button>
-    <button style="background:#ccc;color:#333;" onclick="resetGame()">Ulang</button>
+    <div id="message" class="message">
+Mila, aku minta maaf ya kalau aku sering ngajakin kamu ketemuan.
+Sebenarnya aku cuma pengen ngomong sesuatu aja sama kamu,
+daripada nggak bisa ketemu terus akhirnya aku sampaikan lewat project ini.
 
-    <div id="result"></div>
+Aku jujur suka sama kamu.
+Kalau ditanya sejak kapan, aslinya sudah lama.
+Aku mulai mengagumimu sejak dulu,
+bahkan sejak waktu aku masih aliyah dan follow Instagram kamu.
+Waktu itu aku pengen banget nge-DM kamu,
+tapi aku belum berani.
+
+Aku pernah punya masa lalu yang bikin aku trauma buat dekat sama perempuan.
+Aku pernah pacaran, lalu diputus dengan alasan orang tua.
+Ternyata setelah itu aku tahu dari temanku,
+bukan karena orang tua, tapi karena dia sudah chatan dengan cowok lain
+saat kami masih pacaran.
+Sejak saat itu aku benar-benar jatuh, depresi, dan kehilangan arah.
+Aku jadi takut buat mulai lagi,
+dan itu sebabnya aku lama nggak pernah pacaran.
+
+Makanya waktu dekat sama kamu,
+aku sering ragu, sering mikir, dan sering takut salah langkah.
+Aku ngomong ini bukan buat ngajak kamu pacaran
+atau nuntut apa pun dari kamu.
+Aku cuma pengen jujur dan menyampaikan perasaanku,
+karena aku sudah nggak bisa menahannya sendiri.
+
+Aku juga mau jujur,
+project ini sebenarnya sudah lama aku buat.
+Dan aku paham kalau selama ini kamu sering menolak
+saat aku ajak ketemuan,
+entah itu buat ngerjain tugas bareng
+atau sekadar pengen ngobrol sebentar.
+
+Aku ngerti kok,
+kamu punya kesibukan dan prioritas sendiri.
+Makanya aku nggak pernah maksain,
+dan memilih menyampaikannya lewat cara ini.
+Aku juga minta maaf kalau selama ini aku sering ngajak kamu keluar.
+
+Terima kasih sudah meluangkan waktu buat membaca ini.
+    </div>
 </div>
 
 <script>
-let target = Math.floor(Math.random() * 20) + 1;
-let kesempatan = 5;
-
-function tebak() {
-    let box = document.getElementById("input");
-    let res = document.getElementById("result");
-    let nilai = parseInt(box.value);
-
-    if (isNaN(nilai) || nilai < 1 || nilai > 20) {
-        res.innerHTML = "Isi angka 1—20 ya, Mila 😆";
-        return;
+    function showMessage() {
+        document.getElementById("message").style.display = "block";
     }
-
-    kesempatan--;
-
-    if (nilai === target) {
-        res.innerHTML = "🎉 Yeay! Mila benar!";
-    } else if (kesempatan <= 0) {
-        res.innerHTML = "Kesempatan habis 😭<br>Jawabannya: " + target;
-    } else {
-        res.innerHTML = nilai < target
-            ? "Masih terlalu kecil, Mila.<br>Sisa: " + kesempatan
-            : "Terlalu besar, Mila.<br>Sisa: " + kesempatan;
-        box.classList.add("shake");
-        setTimeout(() => box.classList.remove("shake"), 300);
-    }
-}
-
-function resetGame() {
-    target = Math.floor(Math.random() * 20) + 1;
-    kesempatan = 5;
-    document.getElementById("result").innerHTML = "Game di-reset. Coba lagi ya!";
-    document.getElementById("input").value = "";
-}
 </script>
 
 </body>
