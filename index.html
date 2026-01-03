@@ -1,112 +1,86 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Untuk Mila</title>
-    <style>
-        body {
-            font-family: "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .card {
-            background: white;
-            width: 90%;
-            max-width: 600px;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        button {
-            padding: 12px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            background-color: #4c6ef5;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #364fc7;
-        }
-
-        .message {
-            margin-top: 25px;
-            text-align: left;
-            white-space: pre-line;
-            line-height: 1.6;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Challenge Tasya 😎</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      background: #020617;
+      border-radius: 10px;
+      padding: 25px;
+      width: 420px;
+      box-shadow: 0 0 25px rgba(0,255,255,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #38bdf8;
+    }
+    p {
+      min-height: 90px;
+      line-height: 1.6;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 6px;
+      background: #38bdf8;
+      color: #020617;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0ea5e9;
+    }
+    .note {
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Hai Mila</h2>
-    <p>Aku bikin sesuatu kecil buat kamu</p>
-    <button onclick="showMessage()">Klik di sini</button>
-
-    <div id="message" class="message">
-Mila, aku minta maaf ya kalau aku sering ngajakin kamu ketemuan.
-Sebenarnya aku cuma pengen ngomong sesuatu aja sama kamu,
-daripada nggak bisa ketemu terus akhirnya aku sampaikan lewat project ini.
-
-Aku jujur suka sama kamu.
-Kalau ditanya sejak kapan, aslinya sudah lama.
-Aku mulai mengagumimu sejak dulu,
-bahkan sejak waktu aku masih aliyah dan follow Instagram kamu.
-Waktu itu aku pengen banget nge-DM kamu,
-tapi aku belum berani.
-
-Aku pernah punya masa lalu yang bikin aku trauma buat dekat sama perempuan.
-Aku pernah pacaran, lalu diputus dengan alasan orang tua.
-Ternyata setelah itu aku tahu dari temanku,
-bukan karena orang tua, tapi karena dia sudah chatan dengan cowok lain
-saat kami masih pacaran.
-Sejak saat itu aku benar-benar jatuh, depresi, dan kehilangan arah.
-Aku jadi takut buat mulai lagi,
-dan itu sebabnya aku lama nggak pernah pacaran.
-
-Makanya waktu dekat sama kamu,
-aku sering ragu, sering mikir, dan sering takut salah langkah.
-Aku ngomong ini bukan buat ngajak kamu pacaran
-atau nuntut apa pun dari kamu.
-Aku cuma pengen jujur dan menyampaikan perasaanku,
-karena aku sudah nggak bisa menahannya sendiri.
-
-Aku juga mau jujur,
-project ini sebenarnya sudah lama aku buat.
-Dan aku paham kalau selama ini kamu sering menolak
-saat aku ajak ketemuan,
-entah itu buat ngerjain tugas bareng
-atau sekadar pengen ngobrol sebentar.
-
-Aku ngerti kok,
-kamu punya kesibukan dan prioritas sendiri.
-Makanya aku nggak pernah maksain,
-dan memilih menyampaikannya lewat cara ini.
-Aku juga minta maaf kalau selama ini aku sering ngajak kamu keluar.
-
-Terima kasih sudah meluangkan waktu buat membaca ini.
-    </div>
+<div class="box">
+  <h1>Challenge: Tasya</h1>
+  <p id="output">
+    Klik tombol buat ngecek pesan random 😌
+  </p>
+  <button onclick="randomMessage()">random</button>
+  <div class="note">
+    ini cuma challenge, jangan baper
+  </div>
 </div>
 
 <script>
-    function showMessage() {
-        document.getElementById("message").style.display = "block";
-    }
+  const messages = [
+    "Tasya detected. Status: manusia normal (kadang).",
+    "Ini project kecil, tapi niatnya lumayan.",
+    "Kalau ini error, berarti nasib.",
+    "Kode jalan = sukses. Kode error = hiburan.",
+    "Pesan ini random, seperti hidup.",
+    "Nggak ada maksud apa-apa. Serius.",
+    "Kalau kamu baca ini, berarti kodenya jalan.",
+    "Challenge diterima, tugas dilaksanakan."
+  ];
+
+  function randomMessage() {
+    const i = Math.floor(Math.random() * messages.length);
+    document.getElementById("output").innerText = messages[i];
+  }
 </script>
 
 </body>
