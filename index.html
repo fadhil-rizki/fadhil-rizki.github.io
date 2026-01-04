@@ -6,13 +6,10 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6) 12%, transparent 13%),
-        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.6) 10%, transparent 11%),
-        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.6) 14%, transparent 15%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.6) 9%, transparent 10%),
-        linear-gradient(135deg, #4fa3ff, #2b6de8);
-      background-size: 300px 300px, 350px 350px, 400px 400px, 450px 450px, cover;
+      background-image: url("https://wallpapercave.com/wp/wp1813272.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,11 +17,22 @@
       margin: 0;
     }
 
+    /* overlay biar teks tetap kebaca */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: 0;
+    }
+
     .card {
+      position: relative;
+      z-index: 1;
       background: white;
       padding: 30px;
       border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
       max-width: 420px;
       text-align: center;
     }
