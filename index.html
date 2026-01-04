@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Hi Tasya 👋</title>
+  <title>Hi Hanin</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,31 +16,36 @@
     .card {
       background: white;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      max-width: 400px;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      max-width: 420px;
       text-align: center;
     }
     h1 {
       margin-bottom: 10px;
+      font-size: 22px;
     }
     p {
       min-height: 80px;
       font-size: 16px;
-      line-height: 1.5;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
     button {
       margin-top: 20px;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border: none;
       border-radius: 20px;
       background: #ff7aa2;
       color: white;
       font-size: 14px;
       cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
     }
     button:hover {
       background: #ff5f90;
+      transform: translateY(-1px);
     }
     .footer {
       margin-top: 15px;
@@ -52,10 +57,8 @@
 <body>
 
 <div class="card">
-  <h1>Hai Tasya 🙂</h1>
-  <p id="text">
-    Klik tombol di bawah ya.
-  </p>
+  <h1>Hai Hanin 🙂</h1>
+  <p id="text">Klik tombol di bawah ya.</p>
   <button onclick="randomText()">klik lagi</button>
   <div class="footer">
     dibuat iseng, jangan dipikirin berat-berat
@@ -75,8 +78,13 @@
   ];
 
   function randomText() {
-    const randomIndex = Math.floor(Math.random() * texts.length);
-    document.getElementById("text").innerText = texts[randomIndex];
+    const textEl = document.getElementById("text");
+    textEl.style.opacity = 0;
+    setTimeout(() => {
+      const i = Math.floor(Math.random() * texts.length);
+      textEl.innerText = texts[i];
+      textEl.style.opacity = 1;
+    }, 200);
   }
 </script>
 
