@@ -1,151 +1,169 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Mini Kasir Bioskop</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    select, input, button {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      margin-top: 15px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    .box {
-      margin-top: 25px;
-      padding: 15px;
-      background: #f1f1f1;
-      border-radius: 8px;
-    }
-    pre {
-      white-space: pre-wrap;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Mini Kasir Bioskop</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #1b2735, #090a0f);
+  color:#fff;
+  margin:0;
+  padding:20px;
+}
+h1{text-align:center;color:#f5c542;}
+.container{
+  max-width:900px;
+  margin:auto;
+  background:#111;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 25px rgba(255,197,66,0.2);
+}
+label{display:block;margin-top:10px;}
+input,select,button{
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+  border-radius:6px;
+  border:none;
+}
+button{
+  background:#f5c542;
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:15px;
+}
+button:hover{background:#ffdb6e;}
+.box{
+  margin-top:20px;
+  padding:15px;
+  background:#1c1c1c;
+  border-radius:8px;
+}
+pre{white-space:pre-wrap;}
+hr{border:1px solid #333;}
+</style>
 </head>
+
 <body>
 
-<h1>🎬 Mini Kasir Bioskop</h1>
+<h1>🎬 MINI KASIR BIOSKOP</h1>
 
 <div class="container">
 
-  <label>Pilih Film</label>
-  <select id="film">
-    <option value="">-- pilih film --</option>
-    <option value="35000|AGAK LAEN: MENYALA PANTIKU">AGAK LAEN: MENYALA PANTIKU</option>
-    <option value="40000|MODUAL NEKAD">MODUAL NEKAD</option>
-    <option value="40000|JANUR IRENG SEWU DINO">JANUR IRENG SEWU DINO</option>
-    <option value="40000|AVATAR: FIRE AND ASH">AVATAR: FIRE AND ASH</option>
-    <option value="40000|THE SPONGEBOB MOVIE">THE SPONGEBOB MOVIE</option>
-    <option value="35000|TIMUR">TIMUR</option>
-  </select>
+<label>Film</label>
+<select id="film">
+  <option value="">-- pilih film --</option>
+  <option value="35000|AGAK LAEN">AGAK LAEN</option>
+  <option value="40000|MODAL NEKAD">MODAL NEKAD</option>
+  <option value="40000|JANUR IRENG">JANUR IRENG</option>
+  <option value="40000|AVATAR">AVATAR</option>
+</select>
 
-  <label>Jumlah Tiket</label>
-  <input type="number" id="jumlahTiket">
+<label>Jumlah Tiket</label>
+<input type="number" id="tiket">
 
-  <label>Nomor Kursi</label>
-  <input type="text" id="kursi" placeholder="contoh A1, B2">
+<label>Kursi</label>
+<input type="text" id="kursi" placeholder="A1, B3">
 
-  <label>Jumlah Popcorn (Rp 10.000)</label>
-  <input type="number" id="popcorn" value="0">
+<label>Popcorn (Rp 10.000)</label>
+<input type="number" id="popcorn" value="0">
 
-  <label>Jumlah Minuman (Rp 8.000)</label>
-  <input type="number" id="minuman" value="0">
+<label>Minuman (Rp 8.000)</label>
+<input type="number" id="minuman" value="0">
 
-  <button onclick="tambahPesanan()">Tambah Pesanan</button>
+<button onclick="tambah()">Tambah Pesanan</button>
 
-  <div class="box">
-    <h3>📋 Daftar Pesanan</h3>
-    <pre id="daftar">Belum ada pesanan.</pre>
-  </div>
+<div class="box">
+<h3>🧾 Daftar Pesanan</h3>
+<pre id="daftar">Belum ada pesanan.</pre>
+</div>
 
-  <div class="box">
-    <h3>💰 Total Pembayaran</h3>
-    <pre id="total">Rp 0</pre>
-  </div>
+<div class="box">
+<h3>💰 Total & Pembayaran</h3>
+<label>Uang Dibayar</label>
+<input type="number" id="bayar">
+<button onclick="hitungBayar()">Hitung</button>
+<pre id="hasilBayar"></pre>
+</div>
+
+<div class="box">
+<h3>📊 Laporan</h3>
+<pre id="laporan">-</pre>
+</div>
 
 </div>
 
 <script>
-  const pesanan = [];
+const pesanan=[];
 
-  function tambahPesanan() {
-    const filmData = document.getElementById("film").value;
-    const jumlahTiket = parseInt(document.getElementById("jumlahTiket").value);
-    const kursi = document.getElementById("kursi").value;
-    const popcorn = parseInt(document.getElementById("popcorn").value) || 0;
-    const minuman = parseInt(document.getElementById("minuman").value) || 0;
+function tambah(){
+  const filmData=document.getElementById("film").value;
+  const tiket=parseInt(document.getElementById("tiket").value);
+  const kursi=document.getElementById("kursi").value;
+  const popcorn=parseInt(document.getElementById("popcorn").value)||0;
+  const minuman=parseInt(document.getElementById("minuman").value)||0;
 
-    if (!filmData || !jumlahTiket || !kursi) {
-      alert("Lengkapi data terlebih dahulu.");
-      return;
-    }
-
-    const [hargaFilm, namaFilm] = filmData.split("|");
-
-    const data = {
-      film: namaFilm,
-      harga: parseInt(hargaFilm),
-      tiket: jumlahTiket,
-      kursi: kursi,
-      popcorn: popcorn,
-      minuman: minuman
-    };
-
-    pesanan.push(data);
-    tampilkanPesanan();
+  if(!filmData||!tiket||!kursi){
+    alert("Lengkapi data!");
+    return;
   }
 
-  function tampilkanPesanan() {
-    let output = "";
-    let totalBayar = 0;
+  const [harga,nama]=filmData.split("|");
 
-    pesanan.forEach((p, i) => {
-      const totalFilm = p.harga * p.tiket;
-      const totalSnack = (p.popcorn * 10000) + (p.minuman * 8000);
-      const subtotal = totalFilm + totalSnack;
-      totalBayar += subtotal;
+  pesanan.push({
+    nama:nama,
+    harga:parseInt(harga),
+    tiket:tiket,
+    kursi:kursi,
+    popcorn:popcorn,
+    minuman:minuman
+  });
 
-      output += `${i+1}. ${p.film}\n`;
-      output += `   Tiket : ${p.tiket}\n`;
-      output += `   Kursi : ${p.kursi}\n`;
-      if (p.popcorn > 0) output += `   Popcorn : ${p.popcorn} pcs\n`;
-      if (p.minuman > 0) output += `   Minuman : ${p.minuman} pcs\n`;
-      output += `   Subtotal : Rp ${subtotal.toLocaleString()}\n\n`;
-    });
+  tampilkan();
+}
 
-    document.getElementById("daftar").innerText = output || "Belum ada pesanan.";
-    document.getElementById("total").innerText = "Rp " + totalBayar.toLocaleString();
-  }
+function tampilkan(){
+  let out="",total=0,tTiket=0,tPop=0,tMin=0;
+
+  pesanan.forEach((p,i)=>{
+    const filmTotal=p.harga*p.tiket;
+    const snackTotal=(p.popcorn*10000)+(p.minuman*8000);
+    const sub=filmTotal+snackTotal;
+    total+=sub;
+    tTiket+=p.tiket;
+    tPop+=p.popcorn;
+    tMin+=p.minuman;
+
+    out+=`${i+1}. ${p.nama}\n`;
+    out+=`   Tiket : ${p.tiket}\n`;
+    out+=`   Kursi : ${p.kursi}\n`;
+    out+=`   Popcorn : ${p.popcorn}\n`;
+    out+=`   Minuman : ${p.minuman}\n`;
+    out+=`   Subtotal : Rp ${sub.toLocaleString()}\n\n`;
+  });
+
+  document.getElementById("daftar").innerText=out||"Belum ada pesanan.";
+  document.getElementById("laporan").innerText=
+    `Total Tiket : ${tTiket}\nPopcorn : ${tPop}\nMinuman : ${tMin}\nTotal Penjualan : Rp ${total.toLocaleString()}`;
+}
+
+function hitungBayar(){
+  let total=0;
+  pesanan.forEach(p=>{
+    total+=(p.harga*p.tiket)+(p.popcorn*10000)+(p.minuman*8000);
+  });
+
+  const bayar=parseInt(document.getElementById("bayar").value);
+  if(!bayar){alert("Masukkan uang");return;}
+
+  const kembali=bayar-total;
+  document.getElementById("hasilBayar").innerText=
+    `Total : Rp ${total.toLocaleString()}\nBayar : Rp ${bayar.toLocaleString()}\nKembalian : Rp ${kembali.toLocaleString()}`;
+}
 </script>
 
 </body>
