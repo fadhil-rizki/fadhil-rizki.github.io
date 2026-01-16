@@ -2,80 +2,74 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Hi 🙂</title>
+  <title>Hai Hanin</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #fceabb, #f8b500);
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fdfbfb, #ebedee);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
 
     .card {
       background: white;
-      padding: 30px;
-      width: 420px;
-      border-radius: 20px;
+      width: 360px;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-      animation: float 3s ease-in-out infinite;
+      animation: fadeIn 1s ease;
     }
 
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .photo {
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 15px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      transition: transform 0.3s ease;
     }
 
-    .photo:hover {
-      transform: scale(1.05);
-    }
-
-    h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
+    h2 {
+      margin: 8px 0;
+      font-size: 20px;
     }
 
     p {
       min-height: 90px;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.6;
-      color: #555;
-      opacity: 1;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      color: #333;
+      transition: opacity 0.3s ease;
     }
 
     button {
       margin-top: 18px;
       padding: 10px 24px;
       border: none;
-      border-radius: 25px;
-      background: #f8b500;
+      border-radius: 20px;
+      background: #ff7aa2;
       color: white;
       font-size: 14px;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.15s ease;
+      transition: all 0.2s ease;
     }
 
     button:hover {
-      background: #e6a700;
-      transform: scale(1.05);
+      background: #ff5f90;
+      transform: translateY(-1px);
     }
 
     .footer {
-      margin-top: 15px;
+      margin-top: 14px;
       font-size: 12px;
       color: #888;
     }
@@ -84,40 +78,38 @@
 <body>
 
 <div class="card">
-  <!-- FOTO CEWEK DI SINI -->
-  <img src="foto-cewek.jpg" alt="foto" class="photo">
+  <img class="photo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQEBYWFhYVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGy0lICYtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAWgB4AMBIgACEQEDEQH/xAAbAAACAwEBAQAAAAAAAAAAAAAEBQADBgIBB//EADsQAAEDAgMFBQcEAwAAAAAAAAEAAgMEEQUSITFBBhMiUWEycYGRobHB0fAjQlLh8TRDYoL/xAAZAQEAAwEBAAAAAAAAAAAAAAAAAQIDBAX/xAApEQEAAQMDAgYDAQAAAAAAAAAAAQIRAxIhMQRBURMiYXGBkaHB/9oADAMBAAIRAxEAPwD0z4z8KXG4Uu6G...R5l9O15T1EeW9RXlvTseW9QeW9MvmPTp5T1IeZPUh5k9SHlz1MV82enDzHojzZ6" alt="Hanin">
 
-  <h1>Hai 🙂</h1>
+  <h2>Hai Hanin 🙂</h2>
 
-  <p id="message">Klik tombol di bawah ya.</p>
+  <p id="text">Klik tombol di bawah ya.</p>
 
-  <button onclick="nextMessage()">klik lagi</button>
+  <button onclick="randomText()">klik lagi</button>
 
-  <div class="footer">dibuat santai, sebagai teman</div>
+  <div class="footer">
+    dibuat santai, nggak ada maksud apa-apa
+  </div>
 </div>
 
 <script>
-  const messages = [
-    "Kadang hal kecil bisa bikin hari jadi lebih ringan.",
-    "Ini cuma pesan sederhana dari teman.",
-    "Kalau capek, semoga ini bikin sedikit tenang.",
-    "Nggak perlu dibales, cukup dibaca aja.",
-    "Kadang perhatian kecil lebih nyaman.",
-    "Aku nulis ini tanpa maksud aneh-aneh.",
-    "Semoga hari kamu nggak terlalu berat.",
-    "Ini cuma pengingat kecil kalau kamu nggak sendirian."
+  const texts = [
+    "Kadang hari biasa bisa terasa lebih ringan cuma karena satu hal kecil.",
+    "Ini nggak penting, cuma pengen bilang semoga harimu baik-baik aja.",
+    "Kalau capek, nggak apa-apa istirahat sebentar.",
+    "Aku nulis ini random aja, tanpa maksud aneh-aneh.",
+    "Semoga hari ini nggak terlalu melelahkan.",
+    "Kalau senyum hari ini, semoga tulus.",
+    "Ini pesan kecil, nggak perlu dibales juga nggak apa-apa.",
+    "Kadang hal sederhana justru paling cukup."
   ];
 
-  function nextMessage() {
-    const el = document.getElementById("message");
+  function randomText() {
+    const el = document.getElementById("text");
     el.style.opacity = 0;
-    el.style.transform = "scale(0.95)";
-
     setTimeout(() => {
-      const i = Math.floor(Math.random() * messages.length);
-      el.innerText = messages[i];
+      const i = Math.floor(Math.random() * texts.length);
+      el.innerText = texts[i];
       el.style.opacity = 1;
-      el.style.transform = "scale(1)";
     }, 200);
   }
 </script>
