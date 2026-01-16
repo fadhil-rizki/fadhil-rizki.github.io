@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <title>Hi 🙂</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       height: 100vh;
@@ -20,29 +16,42 @@
 
     .card {
       background: white;
-      padding: 32px;
+      padding: 30px;
       width: 420px;
-      border-radius: 18px;
+      border-radius: 20px;
       text-align: center;
       box-shadow: 0 15px 40px rgba(0,0,0,0.15);
       animation: float 3s ease-in-out infinite;
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
+      0%,100% { transform: translateY(0); }
       50% { transform: translateY(-6px); }
     }
 
+    .photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .photo:hover {
+      transform: scale(1.05);
+    }
+
     h1 {
-      margin-bottom: 10px;
       font-size: 22px;
-      color: #333;
+      margin-bottom: 10px;
     }
 
     p {
+      min-height: 90px;
       font-size: 16px;
       line-height: 1.6;
-      min-height: 90px;
       color: #555;
       opacity: 1;
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -57,7 +66,7 @@
       color: white;
       font-size: 14px;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.2s ease;
+      transition: background 0.2s ease, transform 0.15s ease;
     }
 
     button:hover {
@@ -74,38 +83,44 @@
 </head>
 <body>
 
-  <div class="card">
-    <h1>Hai 🙂</h1>
-    <p id="message">Klik tombol di bawah ya.</p>
-    <button onclick="nextMessage()">klik lagi</button>
-    <div class="footer">dibuat santai, tanpa maksud aneh-aneh</div>
-  </div>
+<div class="card">
+  <!-- FOTO CEWEK DI SINI -->
+  <img src="foto-cewek.jpg" alt="foto" class="photo">
 
-  <script>
-    const messages = [
-      "Kadang ngobrol sebentar aja bisa bikin hari lebih ringan.",
-      "Tenang aja, ini cuma pesan kecil dari teman.",
-      "Kalau hari kamu berat, semoga ini bikin agak mendingan.",
-      "Aku nulis ini iseng, tapi harapannya tulus.",
-      "Nggak semua hal harus dibales, cukup dibaca aja juga gapapa.",
-      "Semoga hari kamu hari ini nggak terlalu capek.",
-      "Kadang perhatian kecil lebih nyaman dari obrolan panjang.",
-      "Aku di sini cuma sebagai teman yang peduli."
-    ];
+  <h1>Hai 🙂</h1>
 
-    function nextMessage() {
-      const el = document.getElementById("message");
-      el.style.opacity = 0;
-      el.style.transform = "scale(0.95)";
+  <p id="message">Klik tombol di bawah ya.</p>
 
-      setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * messages.length);
-        el.innerText = messages[randomIndex];
-        el.style.opacity = 1;
-        el.style.transform = "scale(1)";
-      }, 200);
-    }
-  </script>
+  <button onclick="nextMessage()">klik lagi</button>
+
+  <div class="footer">dibuat santai, sebagai teman</div>
+</div>
+
+<script>
+  const messages = [
+    "Kadang hal kecil bisa bikin hari jadi lebih ringan.",
+    "Ini cuma pesan sederhana dari teman.",
+    "Kalau capek, semoga ini bikin sedikit tenang.",
+    "Nggak perlu dibales, cukup dibaca aja.",
+    "Kadang perhatian kecil lebih nyaman.",
+    "Aku nulis ini tanpa maksud aneh-aneh.",
+    "Semoga hari kamu nggak terlalu berat.",
+    "Ini cuma pengingat kecil kalau kamu nggak sendirian."
+  ];
+
+  function nextMessage() {
+    const el = document.getElementById("message");
+    el.style.opacity = 0;
+    el.style.transform = "scale(0.95)";
+
+    setTimeout(() => {
+      const i = Math.floor(Math.random() * messages.length);
+      el.innerText = messages[i];
+      el.style.opacity = 1;
+      el.style.transform = "scale(1)";
+    }, 200);
+  }
+</script>
 
 </body>
 </html>
