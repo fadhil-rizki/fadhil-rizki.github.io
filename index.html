@@ -2,34 +2,137 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Hi Hanin</title>
+<title>Hi Hanin 💗</title>
+
 <style>
   body {
     margin: 0;
     height: 100vh;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ffd1dc, #ffc0cb);
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
   }
 
-  .container {
-    background: rgba(255,255,255,0.85);
-    padding: 30px;
-    border-radius: 22px;
-    max-width: 420px;
+  .card {
+    background: rgba(255,255,255,0.9);
+    padding: 28px;
+    border-radius: 24px;
+    max-width: 360px;
     text-align: center;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-    animation: floatUp 1.2s ease;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+    animation: fadeUp 1.2s ease;
   }
 
-  @keyframes floatUp {
+  @keyframes fadeUp {
     from {
       opacity: 0;
       transform: translateY(40px);
     }
     to {
       opacity: 1;
-      transform: translateY(
+      transform: translateY(0);
+    }
+  }
+
+  .photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid #ff8fab;
+    box-shadow: 0 0 25px rgba(255, 143, 171, 0.6);
+    margin-bottom: 18px;
+    animation: pulse 3s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 18px rgba(255,143,171,0.4); }
+    50% { box-shadow: 0 0 32px rgba(255,143,171,0.8); }
+    100% { box-shadow: 0 0 18px rgba(255,143,171,0.4); }
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #d6336c;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 90px;
+    color: #444;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  button {
+    margin-top: 18px;
+    padding: 10px 26px;
+    border: none;
+    border-radius: 30px;
+    background: #ff5d8f;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background: #e64980;
+    transform: translateY(-1px);
+  }
+
+  .footer {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #888;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <!-- FOTO DI SINI -->
+  <img src="hanin.jpg" alt="Hanin" class="photo">
+
+  <h1>Hi Hanin 🌸</h1>
+
+  <p id="text">Klik aja, ini cuma halaman kecil.</p>
+
+  <button onclick="nextText()">klik lagi</button>
+
+  <div class="footer">
+    dibuat dengan vibes cewek ✨
+  </div>
+</div>
+
+<script>
+  const texts = [
+    "Kadang hal kecil bisa bikin hari jadi lebih lembut.",
+    "Nggak semua yang manis harus dijelasin panjang.",
+    "Ini cuma halaman sederhana, tapi dibikinnya nggak asal.",
+    "Kalau kamu senyum dikit, berarti cukup.",
+    "Tenang aja, nggak ada maksud aneh di sini.",
+    "Beberapa hal memang enaknya dinikmati pelan-pelan.",
+    "Nggak penting, tapi semoga kamu ngerasa hangat.",
+    "Kadang warna pink juga bisa tenang."
+  ];
+
+  function nextText() {
+    const el = document.getElementById("text");
+    el.style.opacity = 0;
+    setTimeout(() => {
+      const i = Math.floor(Math.random() * texts.length);
+      el.innerText = texts[i];
+      el.style.opacity = 1;
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
