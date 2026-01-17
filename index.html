@@ -1,121 +1,99 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Hai Hanin</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #fdfbfb, #ebedee);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<meta charset="UTF-8">
+<title>Just Something</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1f2933, #111827);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e5e7eb;
+  }
 
-    .card {
-      background: white;
-      width: 360px;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      text-align: center;
-      animation: fadeIn 1s ease;
-    }
+  .box {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
 
-    .photo {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 90px;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+  }
 
-    h2 {
-      margin: 8px 0;
-      font-size: 20px;
-    }
+  button {
+    margin-top: 20px;
+    padding: 10px 26px;
+    border: none;
+    border-radius: 30px;
+    background: #6366f1;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.2s;
+  }
 
-    p {
-      min-height: 90px;
-      font-size: 15px;
-      line-height: 1.6;
-      color: #333;
-      transition: opacity 0.3s ease;
-    }
+  button:hover {
+    background: #4f46e5;
+    transform: translateY(-1px);
+  }
 
-    button {
-      margin-top: 18px;
-      padding: 10px 24px;
-      border: none;
-      border-radius: 20px;
-      background: #ff7aa2;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    button:hover {
-      background: #ff5f90;
-      transform: translateY(-1px);
-    }
-
-    .footer {
-      margin-top: 14px;
-      font-size: 12px;
-      color: #888;
-    }
-  </style>
+  .footer {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #9ca3af;
+  }
+</style>
 </head>
 <body>
 
-<div class="card">
-  <img class="photo" src="hanin.jpg.jpeg" alt="Hanin">
-  <h2>Hai Hanin 🙂</h2>
-
-  <p id="text">Klik tombol di bawah ya.</p>
-
-  <button onclick="randomText()">klik lagi</button>
-
-  <div class="footer">
-    dibuat santai, nggak ada maksud apa-apa
-  </div>
+<div class="box">
+  <h1>just a random page</h1>
+  <p id="text">Klik aja. Nggak ada yang penting kok.</p>
+  <button onclick="nextText()">klik lagi</button>
+  <div class="footer">dibuat tanpa maksud apa-apa</div>
 </div>
 
 <script>
   const texts = [
-    "Kadang hari biasa bisa terasa lebih ringan cuma karena satu hal kecil.",
-    "Ini nggak penting, cuma pengen bilang semoga harimu baik-baik aja.",
-    "Kalau capek, nggak apa-apa istirahat sebentar.",
-    "Aku nulis ini random aja, tanpa maksud aneh-aneh.",
-    "Semoga hari ini nggak terlalu melelahkan.",
-    "Kalau senyum hari ini, semoga tulus.",
-    "Ini pesan kecil, nggak perlu dibales juga nggak apa-apa.",
-    "Kadang hal sederhana justru paling cukup."
+    "Kadang ada orang yang nggak perlu dimiliki buat bikin hari lebih ringan.",
+    "Tenang aja, nggak semua hal harus diperjuangkan keras-keras.",
+    "Ada hal yang cukup disimpan, bukan diumbar.",
+    "Beberapa perasaan emang paling aman kalau ditaruh di kepala sendiri.",
+    "Kalau kamu ngerasa biasa aja, berarti web ini kerja dengan baik.",
+    "Nggak semua yang diam itu kosong.",
+    "Kadang yang sederhana justru paling kena.",
+    "Ini cuma halaman kecil. Sisanya biar kamu sendiri yang mikir."
   ];
 
-  function randomText() {
+  function nextText() {
     const el = document.getElementById("text");
     el.style.opacity = 0;
     setTimeout(() => {
       const i = Math.floor(Math.random() * texts.length);
       el.innerText = texts[i];
       el.style.opacity = 1;
-    }, 200);
+    }, 300);
   }
 </script>
 
 </body>
 </html>
-
-
-
-
