@@ -2,98 +2,34 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Just Something</title>
+<title>Hi Hanin</title>
 <style>
   body {
     margin: 0;
     height: 100vh;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #1f2933, #111827);
+    background: linear-gradient(135deg, #ffd1dc, #ffc0cb);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #e5e7eb;
+    overflow: hidden;
   }
 
-  .box {
-    background: rgba(255,255,255,0.05);
+  .container {
+    background: rgba(255,255,255,0.85);
     padding: 30px;
-    border-radius: 16px;
+    border-radius: 22px;
     max-width: 420px;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    animation: floatUp 1.2s ease;
   }
 
-  h1 {
-    font-size: 20px;
-    margin-bottom: 15px;
-    font-weight: 500;
-  }
-
-  p {
-    font-size: 16px;
-    line-height: 1.6;
-    min-height: 90px;
-    opacity: 1;
-    transition: opacity 0.4s ease;
-  }
-
-  button {
-    margin-top: 20px;
-    padding: 10px 26px;
-    border: none;
-    border-radius: 30px;
-    background: #6366f1;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s, transform 0.2s;
-  }
-
-  button:hover {
-    background: #4f46e5;
-    transform: translateY(-1px);
-  }
-
-  .footer {
-    margin-top: 14px;
-    font-size: 12px;
-    color: #9ca3af;
-  }
-</style>
-</head>
-<body>
-
-<div class="box">
-  <h1>just a random page</h1>
-  <p id="text">Klik aja. Nggak ada yang penting kok.</p>
-  <button onclick="nextText()">klik lagi</button>
-  <div class="footer">dibuat tanpa maksud apa-apa</div>
-</div>
-
-<script>
-  const texts = [
-    "Kadang ada orang yang nggak perlu dimiliki buat bikin hari lebih ringan.",
-    "Tenang aja, nggak semua hal harus diperjuangkan keras-keras.",
-    "Ada hal yang cukup disimpan, bukan diumbar.",
-    "Beberapa perasaan emang paling aman kalau ditaruh di kepala sendiri.",
-    "Kalau kamu ngerasa biasa aja, berarti web ini kerja dengan baik.",
-    "Nggak semua yang diam itu kosong.",
-    "Kadang yang sederhana justru paling kena.",
-    "Ini cuma halaman kecil. Sisanya biar kamu sendiri yang mikir."
-  ];
-
-  function nextText() {
-    const el = document.getElementById("text");
-    el.style.opacity = 0;
-    setTimeout(() => {
-      const i = Math.floor(Math.random() * texts.length);
-      el.innerText = texts[i];
-      el.style.opacity = 1;
-    }, 300);
-  }
-</script>
-
-</body>
-</html>
+  @keyframes floatUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(
