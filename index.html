@@ -1,51 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Selamat Ulang Tahun, Tafida Hanin Aulia 🎉</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Open This 🎁</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffd6e8, #ffeaf3);
+  font-family: Arial, sans-serif;
+}
+.box {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  animation: pop 1s ease;
+}
+@keyframes pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 20px;
+  background: #ff7aa2;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover {
+  background: #ff5f90;
+}
+</style>
 </head>
 <body>
-  <canvas id="confetti-canvas"></canvas>
 
-  <main class="hero">
-    <div class="card">
-      <div class="left">
-        <img id="photo" src="assets/photo.jpg" alt="Foto Tafida (ganti di assets/photo.jpg)">
-      </div>
-      <div class="right">
-        <h1>Selamat Ulang Tahun</h1>
-        <h2 class="name">Tafida Hanin Aulia</h2>
-        <p class="subtitle">Semoga hari ini dipenuhi tawa, cinta, dan kejutan manis </p>
+<div class="box">
+  <h2>🎂 Ada sesuatu buat kamu</h2>
+  <p>Klik tombol di bawah ya</p>
+  <button onclick="location.href='page1.html'">Buka 🎉</button>
+</div>
 
-        <div class="buttons">
-          <button id="openGiftBtn" class="btn primary">Buka Hadiah 🎁</button>
-          <button id="playMusicBtn" class="btn">Putar Musik ♪</button>
-        </div>
-
-        <div class="countdown" id="countdown" aria-hidden="true"></div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Modal hadiah / ucapan -->
-  <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="close" id="closeModal">&times;</button>
-      <h3>Untuk Tafida</h3>
-      <p id="message">
-        Hai Tafida — semoga segala impianmu tercapai. Terima kasih sudah hadir dan membuat dunia lebih indah. Selamat ulang tahun!
-      </p>
-      <div class="gift-photo">
-        <img src="assets/photo.jpg" alt="Foto Tafida">
-      </div>
-    </div>
-  </div>
-
-  <!-- Audio (ganti src dengan file musik Anda atau URL) -->
-  <audio id="bgMusic" src="" preload="none"></audio>
-
-  <script src="script.js" defer></script>
 </body>
 </html>
