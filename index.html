@@ -1,134 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Untuk Zahra</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-
-<style>
-body{
-  margin:0;
-  height:100vh;
-  font-family:'Poppins', sans-serif;
-  background: linear-gradient(120deg,#fdeff9,#ecf2ff);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-}
-
-/* floating dots */
-.dot{
-  position:absolute;
-  width:12px;
-  height:12px;
-  background:#ffd6e8;
-  border-radius:50%;
-  animation: float 8s infinite linear;
-  opacity:0.6;
-}
-@keyframes float{
-  0%{transform:translateY(100vh);}
-  100%{transform:translateY(-120vh);}
-}
-
-/* card */
-.card{
-  background:white;
-  width:360px;
-  padding:28px;
-  border-radius:26px;
-  text-align:center;
-  box-shadow:0 18px 35px rgba(0,0,0,0.12);
-  z-index:2;
-}
-
-/* photo */
-.photo{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  object-fit:cover;
-  border:5px solid #f6c1dc;
-  margin-bottom:10px;
-}
-
-h1{
-  margin:8px 0;
-  color:#555;
-  font-weight:500;
-}
-
-p{
-  min-height:80px;
-  font-size:15px;
-  color:#666;
-  line-height:1.6;
-  transition:opacity 0.3s;
-}
-
-button{
-  margin-top:18px;
-  padding:10px 24px;
-  border:none;
-  border-radius:25px;
-  background:#f6a6c1;
-  color:white;
-  cursor:pointer;
-}
-button:hover{
-  background:#f28bb0;
-}
-
-.footer{
-  margin-top:12px;
-  font-size:12px;
-  color:#888;
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Selamat Ulang Tahun, Tafida Hanin Aulia 🎉</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+  <canvas id="confetti-canvas"></canvas>
 
-<div class="dot" style="left:15%;animation-delay:0s"></div>
-<div class="dot" style="left:35%;animation-delay:2s"></div>
-<div class="dot" style="left:55%;animation-delay:4s"></div>
-<div class="dot" style="left:75%;animation-delay:1s"></div>
+  <main class="hero">
+    <div class="card">
+      <div class="left">
+        <img id="photo" src="assets/photo.jpg" alt="Foto Tafida (ganti di assets/photo.jpg)">
+      </div>
+      <div class="right">
+        <h1>Selamat Ulang Tahun</h1>
+        <h2 class="name">Tafida Hanin Aulia</h2>
+        <p class="subtitle">Semoga hari ini dipenuhi tawa, cinta, dan kejutan manis </p>
 
-<div class="card">
-  <img src="zahra.jpg" class="photo" alt="Zahra">
+        <div class="buttons">
+          <button id="openGiftBtn" class="btn primary">Buka Hadiah 🎁</button>
+          <button id="playMusicBtn" class="btn">Putar Musik ♪</button>
+        </div>
 
-  <h1>Hai Zahra</h1>
+        <div class="countdown" id="countdown" aria-hidden="true"></div>
+      </div>
+    </div>
+  </main>
 
-  <p id="text">Klik pelan aja.</p>
-
-  <button onclick="nextText()">klik lagi</button>
-
-  <div class="footer">
-    cuma web kecil, isinya random
+  <!-- Modal hadiah / ucapan -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close" id="closeModal">&times;</button>
+      <h3>Untuk Tafida</h3>
+      <p id="message">
+        Hai Tafida — semoga segala impianmu tercapai. Terima kasih sudah hadir dan membuat dunia lebih indah. Selamat ulang tahun!
+      </p>
+      <div class="gift-photo">
+        <img src="assets/photo.jpg" alt="Foto Tafida">
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-const texts=[
-  "Kadang hal sederhana itu justru yang bikin nyaman.",
-  "Ini nggak penting sih, tapi semoga harimu nggak berat.",
-  "Kalau lagi capek, nggak apa-apa pelan dikit.",
-  "Nggak semua hal harus dijelasin panjang.",
-  "Semoga hari ini ada satu hal kecil yang bikin senyum.",
-  "Ini cuma pesan random, nggak perlu dipikir jauh."
-];
+  <!-- Audio (ganti src dengan file musik Anda atau URL) -->
+  <audio id="bgMusic" src="" preload="none"></audio>
 
-function nextText(){
-  const el=document.getElementById("text");
-  el.style.opacity=0;
-  setTimeout(()=>{
-    el.innerText=texts[Math.floor(Math.random()*texts.length)];
-    el.style.opacity=1;
-  },200);
-}
-</script>
-
+  <script src="script.js" defer></script>
 </body>
 </html>
