@@ -9,8 +9,6 @@
             background: #0f172a;
             color: white;
         }
-<h2>Dashboard</h2>
-<button onclick="logout()">Logout</button>
 
         .navbar {
             background: #1e293b;
@@ -42,16 +40,10 @@
     </style>
 </head>
 <body>
-    <script>
-function logout() {
-    window.location.href = "login.html";
-}
-</script>
-</body>
 
 <div class="navbar">
     <div>NeoBank</div>
-    <div>Logout</div>
+    <div onclick="logout()" style="cursor:pointer;">Logout</div>
 </div>
 
 <div class="saldo">
@@ -69,5 +61,12 @@ function logout() {
 </a>
 </div>
 
+    <script>
+function logout() {
+    window.location.href = "login.html";
+}
+</script>
+</body>
+</html>
 </body>
 </html>
