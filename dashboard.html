@@ -9,11 +9,7 @@
             background: #0f172a;
             color: white;
         }
-    </style>
-</head>
-<body>
-
-    <h2>Dashboard</h2>
+<h2>Dashboard</h2>
 <button onclick="logout()">Logout</button>
 
         .navbar {
@@ -46,6 +42,12 @@
     </style>
 </head>
 <body>
+    <script>
+function logout() {
+    window.location.href = "login.html";
+}
+</script>
+</body>
 
 <div class="navbar">
     <div>NeoBank</div>
@@ -67,11 +69,5 @@
 </a>
 </div>
 
-</body>
-    <script>
-function logout() {
-    window.location.href = "login.html";
-}
-</script>
 </body>
 </html>
