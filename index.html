@@ -1,112 +1,116 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Semangat Skripsi</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      font-family: "Segoe UI", sans-serif;
-      overflow: hidden;
-    }
+    <title>NeoBank</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+        }
 
-    .paper {
-      width: 350px;
-      min-height: 220px;
-      background: #fffdf7;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-      position: relative;
-      transform: rotate(-2deg);
-      animation: float 3s ease-in-out infinite;
-    }
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+        }
 
-    .paper::before {
-      content: "";
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70px;
-      height: 25px;
-      background: #f87171;
-      border-radius: 5px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-    }
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 15px;
-      color: #333;
-    }
+        .menu a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+        }
 
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #444;
-      text-align: center;
-    }
+        /* HERO */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 40px;
+        }
 
-    button {
-      margin-top: 20px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      background: #667eea;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-      width: 100%;
-    }
+        .hero-text h1 {
+            font-size: 50px;
+        }
 
-    button:hover {
-      background: #5a67d8;
-    }
+        .hero-text p {
+            color: #cbd5e1;
+            margin: 20px 0;
+        }
 
-    @keyframes float {
-      0%,100% { transform: rotate(-2deg) translateY(0); }
-      50% { transform: rotate(-2deg) translateY(-10px); }
-    }
+        .btn {
+            background: linear-gradient(90deg, #38bdf8, #6366f1);
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+        }
 
-  </style>
+        /* CARD */
+        .cards {
+            display: flex;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            flex: 1;
+        }
+
+        .card h3 {
+            color: #38bdf8;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="paper">
-    <h2>Semangat Skripsi 💪</h2>
-    <p id="quote">
-      Kamu sudah sampai sejauh ini. Jangan berhenti sekarang. Skripsi ini bukan akhir, tapi awal menuju masa depan yang lebih baik.
-    </p>
-    <button onclick="gantiKata()">Klik untuk motivasi lagi</button>
-  </div>
+<div class="navbar">
+    <div class="logo">NeoBank</div>
+    <div class="menu">
+        <a href="#">Produk</a>
+        <a href="#">Promo</a>
+        <a href="login.html">Login</a>
+    </div>
+</div>
 
-  <script>
-    const kataSemangat = [
-      "Pelan tidak apa-apa, yang penting terus maju. Skripsimu akan selesai tepat waktu.",
-      "Setiap halaman yang kamu kerjakan hari ini mendekatkanmu ke wisuda.",
-      "Jangan menyerah. Kamu lebih kuat dari rasa malasmu.",
-      "Capek itu wajar, berhenti itu pilihan. Kamu pasti bisa.",
-      "Bayangkan orang tuamu bangga saat kamu lulus nanti.",
-      "Satu paragraf hari ini lebih baik daripada tidak sama sekali.",
-      "Percaya pada proses. Semua perjuanganmu akan terbayar.",
-      "Kamu tidak sendirian. Banyak orang juga sedang berjuang seperti kamu.",
-      "Fokus sekarang, bahagia nanti.",
-      "Skripsi ini hanya sementara, gelar itu selamanya."
-    ];
+<div class="hero">
+    <div class="hero-text">
+        <h1>Bank Digital Masa Depan</h1>
+        <p>Transfer, investasi, dan pembayaran dalam satu aplikasi.</p>
+        <a href="#" class="btn">Buka Rekening</a>
+    </div>
+</div>
 
-    function gantiKata() {
-      const random = Math.floor(Math.random() * kataSemangat.length);
-      document.getElementById("quote").innerText = kataSemangat[random];
-    }
-  </script>
+<div class="cards">
+    <div class="card">
+        <h3>Gratis Transfer</h3>
+        <p>Transfer antar bank tanpa biaya.</p>
+    </div>
+
+    <div class="card">
+        <h3>Keamanan Tinggi</h3>
+        <p>Proteksi AI dan enkripsi modern.</p>
+    </div>
+
+    <div class="card">
+        <h3>Investasi Mudah</h3>
+        <p>Mulai investasi hanya dari 10 ribu.</p>
+    </div>
+</div>
 
 </body>
 </html>
