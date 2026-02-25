@@ -3,12 +3,20 @@
 <head>
     <title>Dashboard - NeoBank</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: #0f172a;
-            color: white;
-        }
+        .card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 15px;
+    flex: 1;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    background: #334155;
+}
 
         .navbar {
             background: #1e293b;
@@ -42,8 +50,8 @@
 <body>
 
 <div class="navbar">
-    <div>NeoBank</div>
-    <a href="login.html">Logout</a>
+    <div style="font-weight:bold; color:#38bdf8;">NeoBank</div>
+    <a href="login.html" style="color:white; text-decoration:none;">Logout</a>
 </div>
 
 <div class="saldo">
